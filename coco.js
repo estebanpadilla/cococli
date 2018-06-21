@@ -69,6 +69,9 @@ function createJS(name) {
 					text += '*/';
 					var buffer = new Buffer(text, 'utf8');
 					fs.writeFileSync(path.resolve(process.cwd(), (name + '.js')), buffer);
+
+					var msj = 'JS file created!'.bgBlue.bold;
+					console.log(msj);
 				}
 			});
 		}
@@ -78,11 +81,15 @@ function createJS(name) {
 function saveEmail(email) {
 	var buffer = new Buffer(email, 'utf8');
 	fs.writeFileSync(path.resolve(__dirname + '/settings/', 'email.txt'), buffer);
+	var msj = 'Email saved, you can use the same commando to change it!'.bgYellow.bold;
+	console.log(msj);
 }
 
 function saveAuthor(author) {
 	var buffer = new Buffer(author, 'utf8');
 	fs.writeFileSync(path.resolve(__dirname + '/settings/', 'author.txt'), buffer);
+	var msj = 'Author saved, you can use the same commando to change it!'.bgYellow.bold;
+	console.log(msj);
 }
 
 function createHTML(name) {
@@ -99,11 +106,17 @@ function createHTML(name) {
 	text += '</html>\n'
 	var buffer = new Buffer(text, 'utf8');
 	fs.writeFileSync(path.resolve(process.cwd(), (name + '.html')), buffer);
+
+	var msj = 'HTML file created!'.bgBlue.bold;
+	console.log(msj);
 }
 
 function createCSS(name) {
 	var buffer = new Buffer('/* Add your amazing style here! */', 'utf8');
 	fs.writeFileSync(path.resolve(process.cwd(), (name + '.css')), buffer);
+
+	var msj = 'CSS file created!'.bgBlue.bold;
+	console.log(msj);
 }
 
 								//console.log(process.argv);
