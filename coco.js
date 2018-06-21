@@ -44,7 +44,7 @@ function createJS(name) {
 		email = 'Add your email here';
 	}
 
-	fs.readFile('./settings/author.txt', function (err, data) {
+	fs.readFile(__dirname + '/settings/author.txt', function (err, data) {
 		if (err) {
 			var msj = 'You have not save a Name and LastName to use as the author for this file!\n'.red.bold;
 			msj += 'Use the command:\n'.red;
@@ -53,7 +53,7 @@ function createJS(name) {
 
 		} else {
 			author = data.toString();
-			fs.readFile('./settings/email.txt', function (err, data) {
+			fs.readFile(__dirname + '/settings/email.txt', function (err, data) {
 				if (err) {
 					var msj = 'You have not add an email to use for the author of this file!\n'.red.bold;
 					msj += 'Use the command:\n'.red;
