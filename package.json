@@ -1,0 +1,14 @@
+{
+  "name": "cococli",
+  "version": "1.0.9",
+  "description": "A small cli tool for personal use.",
+  "main": "coco.js",
+  "bin": {
+    "coco": "coco.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Esteban Padilla",
+  "license": "ISC"
+}
