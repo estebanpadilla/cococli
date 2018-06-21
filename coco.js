@@ -11,6 +11,11 @@ var args = require("yargs").argv;
 var author = '';
 var email = '';
 
+var config = {
+	author: '',
+	email: ''
+}
+
 function start() {
 
 	var isOK = false;
