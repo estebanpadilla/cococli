@@ -2,6 +2,7 @@
 
 /**
  * @todo Add JSON configuration file.
+ * @todo Add create html starter project with index.html, main.js and style
  */
 
 var fs = require('fs');
@@ -47,10 +48,10 @@ function start() {
 					saveAuthor(args[key] + ' ' + args['_']);
 					isOK = true;
 					break;
-				// case 'help':
-				// case 'h':
-				// showHelp();
-				// isOK = true;
+					// case 'help':
+					// case 'h':
+					// showHelp();
+					// isOK = true;
 				default:
 					break;
 			}
@@ -195,4 +196,3 @@ function showHelp() {
 // console.log(__dirname + '/hola.txt');
 // console.log(process.cwd());
 // fs.writeFileSync(path.resolve(process.cwd(), 'hola.txt'), buffer);
-
