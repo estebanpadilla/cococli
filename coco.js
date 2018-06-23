@@ -13,24 +13,24 @@ var colors = require('colors');
 var coco = {};
 
 coco.saveEmail = function (email) {
-	this.loadConfiguration().then(function (configuration) {
+	loadConfiguration().then(function (configuration) {
 		configuration.email = email;
-		this.saveConfiguration(configuration);
+		saveConfiguration(configuration);
 	}).catch(function (reject) {
 		//Do nothing here for now.
-	});;
+	});
 }
 
 coco.saveAuthor = function (author) {
-	this.loadConfiguration().then(function (configuration) {
+	loadConfiguration().then(function (configuration) {
 		configuration.author = author;
-		this.saveConfiguration(configuration)
+		saveConfiguration(configuration)
 	}).catch(function (reject) {
 		//Do nothing here for now.
-	});;
+	});
 }
 
-coco.loadConfiguration = function () {
+function loadConfiguration() {
 	return new Promise(function (resolve, reject) {
 		var file = fs.readFile((__dirname + '/configuration.json'), function (err, data) {
 			if (err) {
@@ -45,9 +45,9 @@ coco.loadConfiguration = function () {
 	});
 }
 
-coco.saveConfiguration = function (configuration) {
+function saveConfiguration(configuration) {
 	var buffer = new Buffer(JSON.stringify(configuration), 'utf8');
-	fs.writeFileSync(path.resolve(__dirname, '/configuration.json'), buffer);
+	fs.writeFileSync(path.resolve(__dirname, './configuration.json'), buffer);
 	var msj = 'Configuration saved, you can use the same command to change it!'.bgYellow.bold;
 	console.log(msj);
 }
@@ -80,7 +80,7 @@ coco.createCSS = function (name) {
 
 coco.createJS = function (name) {
 
-	this.loadConfiguration().then(function (configuration) {
+	loadConfiguration().then(function (configuration) {
 
 		var text = '/**\n';
 		text += '* @name ' + name + '.js\n';
@@ -101,7 +101,7 @@ coco.createJS = function (name) {
 
 coco.createClass = function (name) {
 
-	this.loadConfiguration().then(function (configuration) {
+	loadConfiguration().then(function (configuration) {
 
 		var className = helpers.capitalizeFirstLetter(name);
 
@@ -130,9 +130,7 @@ coco.createClass = function (name) {
 }
 
 coco.createProject = function (name) {
-	this.loadConfiguration().then(function (configuration) {
-		//Create directory
-		//Add index, js, style
+	loadConfiguration().then(function (configuration) {
 		var dir = path.resolve(process.cwd(), name);
 		fs.mkdir(dir, function (err) {
 			if (err) {
