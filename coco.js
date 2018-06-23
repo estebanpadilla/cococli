@@ -13,18 +13,18 @@ var colors = require('colors');
 var coco = {};
 
 coco.saveEmail = function (email) {
-	loadConfiguration().then(function (configuration) {
+	this.loadConfiguration().then(function (configuration) {
 		configuration.email = email;
-		saveConfiguration(configuration);
+		this.saveConfiguration(configuration);
 	}).catch(function (reject) {
 		//Do nothing here for now.
 	});;
 }
 
 coco.saveAuthor = function (author) {
-	loadConfiguration().then(function (configuration) {
+	this.loadConfiguration().then(function (configuration) {
 		configuration.author = author;
-		saveConfiguration(configuration)
+		this.saveConfiguration(configuration)
 	}).catch(function (reject) {
 		//Do nothing here for now.
 	});;
@@ -191,42 +191,3 @@ coco.showHelp = function () {
 }
 
 module.exports = coco;
-
-
-//Old methods, delete later.
-function getAuthor(callback) {
-	fs.readFile(__dirname + '/settings/author.txt', function (err, data) {
-		if (err) {
-			var msj = 'You have not save a Name and LastName to use as the author for this file!\n'.red.bold;
-			msj += 'Use the command:\n'.red;
-			msj += 'coco --author Name LastName'.red;
-			console.log(msj);
-		} else {
-			author = data.toString();
-			getEmail(callback);
-		}
-	});
-}
-
-function getEmail(callback) {
-	fs.readFile(__dirname + '/settings/email.txt', function (err, data) {
-		if (err) {
-			var msj = 'You have not add an email to use for the author of this file!\n'.red.bold;
-			msj += 'Use the command:\n'.red;
-			msj += 'coco --email YourEmailAddress'.red;
-			console.log(msj);
-		} else {
-			email = data.toString();
-			callback();
-		}
-	});
-}
-
-//console.log(process.argv);
-// var myArgs = process.argv.slice(2);
-// console.log('myArgs: ', myArgs);
-
-// var buffer = new Buffer('HOLA COCO', 'utf8');
-// console.log(__dirname + '/hola.txt');
-// console.log(process.cwd());
-// fs.writeFileSync(path.resolve(process.cwd(), 'hola.txt'), buffer);
