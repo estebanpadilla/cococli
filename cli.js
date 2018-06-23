@@ -31,7 +31,7 @@ function start() {
 					isOK = true;
 					break;
 				case 'class':
-					coco.creareClass(args[key]);
+					coco.createClass(args[key]);
 					isOK = true;
 					break;
 				case 'email':
@@ -40,6 +40,10 @@ function start() {
 					break;
 				case 'author':
 					coco.saveAuthor(args[key] + ' ' + args['_']);
+					isOK = true;
+					break;
+				case 'proj':
+					coco.createProject(args[key]);
 					isOK = true;
 					break;
 				// case 'help':
