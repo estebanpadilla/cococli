@@ -1,86 +1,59 @@
-#!/usr/bin/env node
-
 /**
- * @todo Add JSON configuration file.
- * @todo Add create html starter project with index.html, main.js and style
- */
+* @name coco.js
+* @file Add a small description for this file.
+* @author Esteban Padilla <ep@estebanpadilla.com>
+* @version 1.0.0
+* @todo Add create html starter project with index.html, main.js and style
+*/
 
+var helpers = require('./lib/helpers');
 var fs = require('fs');
 var path = require('path');
 var colors = require('colors');
-var args = require("yargs").argv;
-var author = '';
-var email = '';
 
-var config = {
-	author: '',
-	email: ''
+var coco = {};
+
+coco.saveEmail = function (email) {
+	loadConfiguration().then(function (configuration) {
+		configuration.email = email;
+		saveConfiguration(configuration);
+	}).catch(function (reject) {
+		//Do nothing here for now.
+	});;
 }
 
-function start() {
+coco.saveAuthor = function (author) {
+	loadConfiguration().then(function (configuration) {
+		configuration.author = author;
+		saveConfiguration(configuration)
+	}).catch(function (reject) {
+		//Do nothing here for now.
+	});;
+}
 
-	var isOK = false;
-
-	for (const key in args) {
-		if (args.hasOwnProperty(key)) {
-			switch (key) {
-				case 'js':
-					createJS(args[key]);
-					isOK = true;
-					break;
-				case 'html':
-					createHTML(args[key]);
-					isOK = true;
-					break;
-				case 'css':
-					createCSS(args[key]);
-					isOK = true;
-					break;
-				case 'class':
-					creareClass(args[key]);
-					isOK = true;
-					break;
-				case 'email':
-					saveEmail(args[key]);
-					isOK = true;
-					break;
-				case 'author':
-					saveAuthor(args[key] + ' ' + args['_']);
-					isOK = true;
-					break;
-					// case 'help':
-					// case 'h':
-					// showHelp();
-					// isOK = true;
-				default:
-					break;
+coco.loadConfiguration = function () {
+	return new Promise(function (resolve, reject) {
+		var file = fs.readFile((__dirname + '/configuration.json'), function (err, data) {
+			if (err) {
+				var msj = 'There is not configuration file saved'.red;
+				console.log(msj);
+				reject(null);
+			} else {
+				var configuration = JSON.parse(data);
+				resolve(configuration)
 			}
-		}
-	}
-
-	if (!isOK) {
-		var msj = 'Error on command!'.bgRed.bold;
-		console.log(msj);
-	}
+		});
+	});
 }
 
-start();
-
-function saveEmail(email) {
-	var buffer = new Buffer(email, 'utf8');
-	fs.writeFileSync(path.resolve(__dirname + '/settings/', 'email.txt'), buffer);
-	var msj = 'Email saved, you can use the same commando to change it!'.bgYellow.bold;
+coco.saveConfiguration = function (configuration) {
+	var buffer = new Buffer(JSON.stringify(configuration), 'utf8');
+	fs.writeFileSync(path.resolve(__dirname, '/configuration.json'), buffer);
+	var msj = 'Configuration saved, you can use the same command to change it!'.bgYellow.bold;
 	console.log(msj);
 }
 
-function saveAuthor(author) {
-	var buffer = new Buffer(author, 'utf8');
-	fs.writeFileSync(path.resolve(__dirname + '/settings/', 'author.txt'), buffer);
-	var msj = 'Author saved, you can use the same commando to change it!'.bgYellow.bold;
-	console.log(msj);
-}
-
-function createHTML(name) {
+coco.createHTML = function (name) {
 	var text = '<!DOCTYPE html>\n'
 	text += '<html lang="en">\n\n'
 	text += '<head>\n'
@@ -99,21 +72,21 @@ function createHTML(name) {
 	console.log(msj);
 }
 
-function createCSS(name) {
+coco.createCSS = function (name) {
 	var buffer = new Buffer('/* Add your amazing style here! */', 'utf8');
 	fs.writeFileSync(path.resolve(process.cwd(), (name + '.css')), buffer);
-
 	var msj = 'CSS file created!'.bgBlue.bold;
 	console.log(msj);
 }
 
-function createJS(name) {
+coco.createJS = function (name) {
 
-	getAuthor(function () {
+	this.loadConfiguration().then(function (configuration) {
+
 		var text = '/**\n';
 		text += '* @name ' + name + '.js\n';
 		text += '* @file Add a small description for this file.\n'
-		text += '* @author ' + author + ' <' + email + '>\n'
+		text += '* @author ' + configuration.author + ' <' + configuration.email + '>\n'
 		text += '* @version 1.0.0\n'
 		text += '*/';
 		var buffer = new Buffer(text, 'utf8');
@@ -121,19 +94,23 @@ function createJS(name) {
 
 		var msj = 'JS file created!'.bgBlue.bold;
 		console.log(msj);
+	}).catch(function (reject) {
+		//Do nothing here for now.
 	});
 }
 
 
-function creareClass(name) {
+coco.creareClass = function (name) {
 
-	getAuthor(function () {
-		var className = capitalizeFirstLetter(name);
+	this.loadConfiguration().then(function (configuration) {
+
+		var className = helpers.capitalizeFirstLetter(name);
+
 		var data = '/**\n';
 		data += '* @name ' + className + '\n';
 		data += '* @extends\n';
 		data += '* @file ' + name + '.js\n'
-		data += '* @author ' + author + ' <' + email + '>\n'
+		data += '* @author ' + configuration.author + ' <' + configuration.email + '>\n'
 		data += '* @version 1.0.0\n'
 		data += '*/\n';
 		data += 'class ' + className + ' {\n';
@@ -148,13 +125,20 @@ function creareClass(name) {
 
 		var msj = 'Class created!'.bgBlue.bold;
 		console.log(msj);
+	}).catch(function (reject) {
+		//Do nothing here for now.
 	});
 }
 
-function capitalizeFirstLetter(string) {
-	return string.charAt(0).toUpperCase() + string.slice(1);
+coco.showHelp = function () {
+	var msj = 'Help is not ready, sorry!'.bgBlue.bold;
+	console.log(msj);
 }
 
+module.exports = coco;
+
+
+//Old methods, delete later.
 function getAuthor(callback) {
 	fs.readFile(__dirname + '/settings/author.txt', function (err, data) {
 		if (err) {
@@ -181,11 +165,6 @@ function getEmail(callback) {
 			callback();
 		}
 	});
-}
-
-function showHelp() {
-	var msj = 'Help is not ready, sorry!'.bgBlue.bold;
-	console.log(msj);
 }
 
 //console.log(process.argv);
