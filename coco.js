@@ -1,8 +1,9 @@
 /**
 * @name coco.js
-* @file Add a small description for this file.
+* @file Charge of creating and saving files.
 * @author Esteban Padilla <ep@estebanpadilla.com>
-* @version 1.0.0
+* @version 1.1.9
+* @todo Add fileManager. configutationManager y errorManager.
 */
 
 var helpers = require('./lib/helpers');
@@ -34,7 +35,7 @@ function loadConfiguration() {
 	return new Promise(function (resolve, reject) {
 		var file = fs.readFile((__dirname + '/configuration.json'), function (err, data) {
 			if (err) {
-				var msj = 'There is not configuration file saved'.red;
+				var msj = '-> There is not configuration available.'.red.bold;
 				console.log(msj);
 				reject(null);
 			} else {
@@ -48,7 +49,7 @@ function loadConfiguration() {
 function saveConfiguration(configuration) {
 	var buffer = new Buffer(JSON.stringify(configuration), 'utf8');
 	fs.writeFileSync(path.resolve(__dirname, './configuration.json'), buffer);
-	var msj = 'Configuration saved, you can use the same command to change it!'.bgYellow.bold;
+	var msj = '-> Configuration saved, you can use the same command to change it anytime!'.blue.bold;
 	console.log(msj);
 }
 
@@ -67,14 +68,14 @@ coco.createHTML = function (name) {
 	var buffer = new Buffer(text, 'utf8');
 	fs.writeFileSync(path.resolve(process.cwd(), (name + '.html')), buffer);
 
-	var msj = 'HTML file created!'.bgBlue.bold;
+	var msj = '-> html file created!'.blue.bold;
 	console.log(msj);
 }
 
 coco.createCSS = function (name) {
 	var buffer = new Buffer('/* Add your amazing style here! */', 'utf8');
 	fs.writeFileSync(path.resolve(process.cwd(), (name + '.css')), buffer);
-	var msj = 'CSS file created!'.bgBlue.bold;
+	var msj = '-> css file created!'.blue.bold;
 	console.log(msj);
 }
 
@@ -91,10 +92,13 @@ coco.createJS = function (name) {
 		var buffer = new Buffer(text, 'utf8');
 		fs.writeFileSync(path.resolve(process.cwd(), (name + '.js')), buffer);
 
-		var msj = 'JS file created!'.bgBlue.bold;
+		var msj = '-> javascript file created!'.blue.bold;
 		console.log(msj);
+
 	}).catch(function (reject) {
 		//Do nothing here for now.
+		var msj = '-> Error loading configuration file.'.red.bold;
+		console.log(msj);
 	});
 }
 
@@ -122,8 +126,9 @@ coco.createClass = function (name) {
 		var buffer = new Buffer(data, 'utf8');
 		fs.writeFileSync(path.resolve(process.cwd(), (name + '.js')), buffer);
 
-		var msj = 'Class created!'.bgBlue.bold;
+		var msj = '-> es6 class created!'.blue.bold;
 		console.log(msj);
+
 	}).catch(function (reject) {
 		//Do nothing here for now.
 	});
@@ -146,9 +151,9 @@ coco.createProject = function (name) {
 				text += 'window.addEventListener(' + "'load'" + ', init, false);\n\n';
 				text += 'function init() {\n';
 				text += '	console.log(' + "'App running!'" + ');\n';
-				text += '	//Declare variables\n';
-				text += '	//Initialize variables\n';
-				text += '	//Program Logic\n';
+				text += '	//1. Declare variables\n';
+				text += '	//2. Initialize variables\n';
+				text += '	//3. Program Logic\n';
 				text += '}'
 
 				var buffer = new Buffer(text, 'utf8');
@@ -165,6 +170,7 @@ coco.createProject = function (name) {
 				text += '	<link rel="stylesheet" href="style.css">\n';
 				text += '</head>\n\n';
 				text += '<body>\n';
+				text += '<h1> Project: ' + name + '</h1>';
 				text += '</body>\n\n';
 				text += '</html>\n';
 				var buffer = new Buffer(text, 'utf8');
@@ -173,7 +179,7 @@ coco.createProject = function (name) {
 				var buffer = new Buffer('/* Add your amazing style here! */', 'utf8');
 				fs.writeFileSync((dir + '/style.css'), buffer);
 
-				var msj = 'Project created!'.bgBlue.bold;
+				var msj = '-> project created!'.blue.bold;
 				console.log(msj);
 			}
 		});
@@ -184,7 +190,23 @@ coco.createProject = function (name) {
 }
 
 coco.showHelp = function () {
-	var msj = 'Help is not ready, sorry!'.bgBlue.bold;
+	var msj = '\n';
+	msj += '-------------------------------------------------------------------------------\n';
+	msj += '                         Using this CLI is very simpe!                       \n'.bold;
+	msj += '-------------------------------------------------------------------------------\n';
+	msj += '  Command  |   Arguments      |  Description                                 \n';
+	msj += '-------------------------------------------------------------------------------\n';
+	msj += '   -js     |   filename       |  Creates a javascrip file                    \n';
+	msj += '   -html   |   filename       |  Creates a html file                         \n';
+	msj += '   -css    |   filename       |  Creates a css file                          \n';
+	msj += '   -proj   |   name           |  Creates a basic web project                 \n';
+	msj += '   -email  |   yourEmail      |  Adds your email to config file              \n';
+	msj += '   -author |   name lastName  |  Adds your name and lastname to config file  \n';
+	msj += '   -help   |                  |  Shows this information                      \n';
+	msj += '-------------------------------------------------------------------------------\n';
+	msj += 'For support or comments send an email to ep@estebanpadilla.com\n'.bold;
+	msj += 'Thank you for using this tool!'.bold;
+	msj += '\n';
 	console.log(msj);
 }
 

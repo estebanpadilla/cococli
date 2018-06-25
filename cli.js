@@ -4,56 +4,51 @@
 * @name cli.js
 * @file Add a small description for this file.
 * @author Esteban Padilla <ep@estebanpadilla.com>
-* @version 1.0.0
+* @version 1.1.9
 */
 
 var coco = require('./coco');
-var args = require("yargs").argv;
 var colors = require('colors');
 
 function start() {
 
 	var isOK = false;
+	var args = process.argv.slice(2);
 
-	for (const key in args) {
-		if (args.hasOwnProperty(key)) {
-			switch (key) {
-				case 'js':
-					coco.createJS(args[key]);
-					isOK = true;
-					break;
-				case 'html':
-					coco.createHTML(args[key]);
-					isOK = true;
-					break;
-				case 'css':
-					coco.createCSS(args[key]);
-					isOK = true;
-					break;
-				case 'class':
-					coco.createClass(args[key]);
-					isOK = true;
-					break;
-				case 'email':
-					coco.saveEmail(args[key]);
-					isOK = true;
-					break;
-				case 'author':
-					coco.saveAuthor(args[key] + ' ' + args['_']);
-					isOK = true;
-					break;
-				case 'proj':
-					coco.createProject(args[key]);
-					isOK = true;
-					break;
-				// case 'help':
-				// case 'h':
-				// showHelp();
-				// isOK = true;
-				default:
-					break;
-			}
-		}
+	switch (args[0]) {
+		case '-js':
+			coco.createJS(args[1]);
+			isOK = true;
+			break;
+		case '-html':
+			coco.createHTML(args[1]);
+			isOK = true;
+			break;
+		case '-css':
+			coco.createCSS(args[1]);
+			isOK = true;
+			break;
+		case '-class':
+			coco.createClass(args[1]);
+			isOK = true;
+			break;
+		case '-email':
+			coco.saveEmail(args[1]);
+			isOK = true;
+			break;
+		case '-author':
+			coco.saveAuthor(args[1] + ' ' + args[2]);
+			isOK = true;
+			break;
+		case '-proj':
+			coco.createProject(args[1]);
+			isOK = true;
+			break;
+		case '-help':
+			coco.showHelp();
+			isOK = true;
+		default:
+			break;
 	}
 
 	if (!isOK) {
