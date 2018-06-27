@@ -200,6 +200,7 @@ coco.showHelp = function () {
 	msj += '   -html   |   filename       |  Creates a html file                         \n';
 	msj += '   -css    |   filename       |  Creates a css file                          \n';
 	msj += '   -proj   |   name           |  Creates a basic web project                 \n';
+	msj += '   -class  |   name           |  Creates a ES6 class                         \n';
 	msj += '   -email  |   yourEmail      |  Adds your email to config file              \n';
 	msj += '   -author |   name lastName  |  Adds your name and lastname to config file  \n';
 	msj += '   -help   |                  |  Shows this information                      \n';
