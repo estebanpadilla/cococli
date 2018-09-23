@@ -141,46 +141,57 @@ coco.createProject = function (name) {
 			if (err) {
 				console.log('Error making dir');
 			} else {
+				fs.readFile(process.cwd() + '/projectFiles/cocoColors.js', 'utf8', function (err, data) {
+					if (err) {
+						console.log('Error reading cocoColors file');
+					} else {
+						//var buffer = new Buffer(text, 'utf8');
+						fs.writeFileSync((dir + '/colors.js'), data);
 
-				var text = '/**\n';
-				text += '* @name index.js\n';
-				text += '* @file Add a small description for this file.\n';
-				text += '* @author ' + configuration.author + ' <' + configuration.email + '>\n';
-				text += '* @version 1.0.0\n';
-				text += '*/\n\n';
-				text += 'window.addEventListener(' + "'load'" + ', init, false);\n\n';
-				text += 'function init() {\n';
-				text += '	console.log(' + "'App running!'" + ');\n';
-				text += '	//1. Declare variables\n';
-				text += '	//2. Initialize variables\n';
-				text += '	//3. Program Logic\n';
-				text += '}'
+						//Save cocoColors.js to project
 
-				var buffer = new Buffer(text, 'utf8');
-				fs.writeFileSync((dir + '/index.js'), buffer);
+						var text = '/**\n';
+						text += '* @name index.js\n';
+						text += '* @file Add a small description for this file.\n';
+						text += '* @author ' + configuration.author + ' <' + configuration.email + '>\n';
+						text += '* @version 1.0.0\n';
+						text += '*/\n\n';
+						text += 'window.addEventListener(' + "'load'" + ', init, false);\n\n';
+						text += 'function init() {\n';
+						text += '	console.log(' + "'App running!'" + ');\n';
+						text += '	//1. Declare variables\n';
+						text += '	//2. Initialize variables\n';
+						text += '	//3. Program Logic\n';
+						text += '}'
 
-				var text = '<!DOCTYPE html>\n';
-				text += '<html lang="en">\n\n';
-				text += '<head>\n';
-				text += '	<meta charset="UTF-8">\n';
-				text += '	<meta name="viewport" content="width=device-width, initial-scale=1.0">\n';
-				text += '	<meta http-equiv="X-UA-Compatible" content="ie=edge">\n';
-				text += '	<title>Document</title>\n';
-				text += '	<script src="index.js"></script>\n';
-				text += '	<link rel="stylesheet" href="style.css">\n';
-				text += '</head>\n\n';
-				text += '<body>\n';
-				text += '<h1> Project: ' + name + '</h1>';
-				text += '</body>\n\n';
-				text += '</html>\n';
-				var buffer = new Buffer(text, 'utf8');
-				fs.writeFileSync((dir + '/index.html'), buffer);
+						var buffer = new Buffer(text, 'utf8');
+						fs.writeFileSync((dir + '/index.js'), buffer);
 
-				var buffer = new Buffer('/* Add your amazing style here! */', 'utf8');
-				fs.writeFileSync((dir + '/style.css'), buffer);
+						var text = '<!DOCTYPE html>\n';
+						text += '<html lang="en">\n\n';
+						text += '<head>\n';
+						text += '	<meta charset="UTF-8">\n';
+						text += '	<meta name="viewport" content="width=device-width, initial-scale=1.0">\n';
+						text += '	<meta http-equiv="X-UA-Compatible" content="ie=edge">\n';
+						text += '	<title>Document</title>\n';
+						text += '	<script src="index.js"></script>\n';
+						text += '	<script src="colors.js"></script>\n';
+						text += '	<link rel="stylesheet" href="style.css">\n';
+						text += '</head>\n\n';
+						text += '<body>\n';
+						text += '<h1 id="title"> Project: ' + name + '</h1>';
+						text += '</body>\n\n';
+						text += '</html>\n';
+						var buffer = new Buffer(text, 'utf8');
+						fs.writeFileSync((dir + '/index.html'), buffer);
 
-				var msj = '-> project created!'.blue.bold;
-				console.log(msj);
+						var buffer = new Buffer('/* Add your amazing style here! */', 'utf8');
+						fs.writeFileSync((dir + '/style.css'), buffer);
+
+						var msj = '-> project created!'.blue.bold;
+						console.log(msj);
+					}
+				});
 			}
 		});
 
