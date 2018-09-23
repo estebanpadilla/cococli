@@ -139,7 +139,7 @@ coco.createProject = function (name) {
 		var dir = path.resolve(process.cwd(), name);
 		fs.mkdir(dir, function (err) {
 			if (err) {
-				console.log('Error making dir');
+				console.log('Error creating project, check if a project with the same name already exist.');
 			} else {
 				fs.readFile(__dirname + '/projectFiles/cocoColors.js', 'utf8', function (err, data) {
 					if (err) {
