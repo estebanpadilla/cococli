@@ -165,7 +165,7 @@ coco.createProject = function (name) {
 						var buffer = new Buffer(text, 'utf8');
 						fs.writeFileSync((dir + '/index.js'), buffer);
 
-						var text = '<!DOCTYPE html>\n';
+						text = '<!DOCTYPE html>\n';
 						text += '<html lang="en">\n\n';
 						text += '<head>\n';
 						text += '	<meta charset="UTF-8">\n';
@@ -180,10 +180,17 @@ coco.createProject = function (name) {
 						text += '<h1 id="title"> Project: ' + name + '</h1>';
 						text += '</body>\n\n';
 						text += '</html>\n';
-						var buffer = new Buffer(text, 'utf8');
+
+						buffer = new Buffer(text, 'utf8');
 						fs.writeFileSync((dir + '/index.html'), buffer);
 
-						var buffer = new Buffer('/* Add your amazing style here! */', 'utf8');
+						text = '/* Add your amazing style here! */\n';
+						text += '* {\n';
+						text += '	padding: 0px;\n';
+						text += '	margin: 0px;\n';
+						text += '}\n';
+
+						buffer = new Buffer(text, 'utf8');
 						fs.writeFileSync((dir + '/style.css'), buffer);
 
 						var msj = '-> project created!'.blue.bold;
@@ -193,6 +200,103 @@ coco.createProject = function (name) {
 			}
 		});
 
+	}).catch(function () {
+
+	});
+}
+
+
+coco.createGame = function (name) {
+	loadConfiguration().then(function (configuration) {
+		var dir = path.resolve(process.cwd(), name);
+		fs.mkdir(dir, function (err) {
+			if (err) {
+				console.log('Error creating game, check if a game with the same name already exist.');
+			} else {
+				fs.readFile(__dirname + '/projectFiles/cocoColors.js', 'utf8', function (err, colors) {
+					if (err) {
+						console.log('Error reading cocoColors file in: ' + __dirname);
+					} else {
+
+						fs.writeFileSync((dir + '/colors.js'), colors);
+
+						fs.readFile(__dirname + '/projectFiles/stats.js', 'utf8', function (err, stats) {
+							if (err) {
+								console.log('Error reading stats file in: ' + __dirname);
+							} else {
+
+								fs.writeFileSync((dir + '/stats.js'), stats);
+
+								var text = '/**\n';
+								text += '* @name index.js\n';
+								text += '* @file Add a small description for this file.\n';
+								text += '* @author ' + configuration.author + ' <' + configuration.email + '>\n';
+								text += '* @version 1.0.0\n';
+								text += '*/\n\n';
+								text += 'window.addEventListener(' + "'load'" + ', init, false);\n\n';
+								text += 'function init() {\n';
+								text += '	console.log(' + "'Game running!'" + ');\n';
+								text += '\n';
+								text += '	//Add Stats\n';
+								text += '	var stats = new Stats();\n';
+								text += '	stats.showPanel(0);\n';
+								text += '  	document.body.appendChild(stats.dom);\n';
+								text += '\n';
+								text += '	var requestId;\n';
+								text += '\n';
+								text += '	function update() {\n';
+								text += '		stats.begin();\n';
+								text += '\n';
+								text += '		//Add here your game code that needs to be update every frame.\n';
+								text += '		stats.end();\n';
+								text += '\n';
+								text += '		requestId = requestAnimationFrame(update);\n';
+								text += '	}\n';
+								text += '\n';
+								text += '	update();\n';
+								text += '\n';
+								text += '	//Add here your game code that does not needs to be update every frame.\n';
+								text += '}'
+
+								var buffer = new Buffer(text, 'utf8');
+								fs.writeFileSync((dir + '/index.js'), buffer);
+
+								text = '<!DOCTYPE html>\n';
+								text += '<html lang="en">\n\n';
+								text += '<head>\n';
+								text += '	<meta charset="UTF-8">\n';
+								text += '	<meta name="viewport" content="width=device-width, initial-scale=1.0">\n';
+								text += '	<meta http-equiv="X-UA-Compatible" content="ie=edge">\n';
+								text += '	<title>Document</title>\n';
+								text += '	<script src="index.js"></script>\n';
+								text += '	<script src="colors.js"></script>\n';
+								text += '	<script src="stats.js"></script>\n';
+								text += '	<link rel="stylesheet" href="style.css">\n';
+								text += '</head>\n\n';
+								text += '<body>\n';
+								text += '<h1 id="title"> Game: ' + name + '</h1>';
+								text += '</body>\n\n';
+								text += '</html>\n';
+								buffer = new Buffer(text, 'utf8');
+								fs.writeFileSync((dir + '/index.html'), buffer);
+
+								text = '/* Add your amazing style here! */\n';
+								text += '* {\n';
+								text += '	padding: 0px;\n';
+								text += '	margin: 0px;\n';
+								text += '}\n';
+
+								buffer = new Buffer(text, 'utf8');
+								fs.writeFileSync((dir + '/style.css'), buffer);
+
+								var msj = '-> game created!'.blue.bold;
+								console.log(msj);
+							}
+						});
+					}
+				});
+			}
+		});
 	}).catch(function () {
 
 	});
@@ -209,6 +313,7 @@ coco.showHelp = function () {
 	msj += '   -html   |   filename       |  Creates a html file                         \n';
 	msj += '   -css    |   filename       |  Creates a css file                          \n';
 	msj += '   -proj   |   name           |  Creates a basic web project                 \n';
+	msj += '   -game   |   name           |  Creates a basic game project                 \n';
 	msj += '   -class  |   name           |  Creates a ES6 class                         \n';
 	msj += '   -email  |   yourEmail      |  Adds your email to config file              \n';
 	msj += '   -author |   name lastName  |  Adds your name and lastname to config file  \n';

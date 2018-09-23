@@ -44,6 +44,10 @@ function start() {
 			coco.createProject(args[1]);
 			isOK = true;
 			break;
+		case '-game':
+			coco.createGame(args[1]);
+			isOK = true;
+			break;
 		case '-help':
 			coco.showHelp();
 			isOK = true;
