@@ -144,56 +144,19 @@ coco.createProject = function (name) {
 
 				addExtraFiles(dir);
 
-				var text = '/**\n';
-				text += '* @name app.js\n';
-				text += '* @file Add a small description for this file.\n';
-				text += '* @author ' + configuration.author + ' <' + configuration.email + '>\n';
-				text += '* @version 1.0.0\n';
-				text += '*/\n\n';
-				text += 'window.addEventListener(' + "'load'" + ', init, false);\n\n';
-				text += 'function init() {\n';
-				text += '	console.log(' + "'App running!'" + ');\n';
-				text += '	//1. Declare variables\n';
-				text += '	//2. Initialize variables\n';
-				text += '	//3. Program Logic\n';
-				text += '}'
-
-				var buffer = new Buffer(text, 'utf8');
+				var buffer = new Buffer(createJSForProject(configuration), 'utf8');
 				fs.writeFileSync((dir + '/app.js'), buffer);
 
-				text = '<!DOCTYPE html>\n';
-				text += '<html lang="en">\n\n';
-				text += '<head>\n';
-				text += '	<meta charset="UTF-8">\n';
-				text += '	<meta name="viewport" content="width=device-width, initial-scale=1.0">\n';
-				text += '	<meta http-equiv="X-UA-Compatible" content="ie=edge">\n';
-				text += '	<title>Document</title>\n';
-				text += '	<script src="app.js"></script>\n';
-				text += '	<script src="js/utils/colors.js"></script>\n';
-				text += '	<link rel="stylesheet" href="style.css">\n';
-				text += '</head>\n\n';
-				text += '<body>\n';
-				text += '<h1 id="title"> Project: ' + name + '</h1>';
-				text += '</body>\n\n';
-				text += '</html>\n';
-
-				buffer = new Buffer(text, 'utf8');
+				buffer = new Buffer(createHTMLForProject(name), 'utf8');
 				fs.writeFileSync((dir + '/index.html'), buffer);
 
-				text = '/* Add your amazing style here! */\n';
-				text += '* {\n';
-				text += '	padding: 0px;\n';
-				text += '	margin: 0px;\n';
-				text += '}\n';
-
-				buffer = new Buffer(text, 'utf8');
+				buffer = new Buffer(createSimpleCSS(), 'utf8');
 				fs.writeFileSync((dir + '/style.css'), buffer);
 
 				var msj = '-> project created!'.blue.bold;
 				console.log(msj);
 			}
 		});
-
 	}).catch(function () {
 
 	});
@@ -210,66 +173,13 @@ coco.createGame = function (name) {
 
 				addExtraFiles(dir);
 
-				var text = '/**\n';
-				text += '* @name app.js\n';
-				text += '* @file Add a small description for this file.\n';
-				text += '* @author ' + configuration.author + ' <' + configuration.email + '>\n';
-				text += '* @version 1.0.0\n';
-				text += '*/\n\n';
-				text += 'window.addEventListener(' + "'load'" + ', init, false);\n\n';
-				text += 'function init() {\n';
-				text += '	console.log(' + "'Game running!'" + ');\n';
-				text += '\n';
-				text += '	//Add Stats\n';
-				text += '	var stats = new Stats();\n';
-				text += '	stats.showPanel(0);\n';
-				text += '  	document.body.appendChild(stats.dom);\n';
-				text += '\n';
-				text += '	var requestId;\n';
-				text += '\n';
-				text += '	function update() {\n';
-				text += '		stats.begin();\n';
-				text += '\n';
-				text += '		//Add here your game code that needs to be update every frame.\n';
-				text += '		stats.end();\n';
-				text += '\n';
-				text += '		requestId = requestAnimationFrame(update);\n';
-				text += '	}\n';
-				text += '\n';
-				text += '	update();\n';
-				text += '\n';
-				text += '	//Add here your game code that does not needs to be update every frame.\n';
-				text += '}'
-
-				var buffer = new Buffer(text, 'utf8');
+				var buffer = new Buffer(createJSForGame(configuration), 'utf8');
 				fs.writeFileSync((dir + '/app.js'), buffer);
 
-				text = '<!DOCTYPE html>\n';
-				text += '<html lang="en">\n\n';
-				text += '<head>\n';
-				text += '	<meta charset="UTF-8">\n';
-				text += '	<meta name="viewport" content="width=device-width, initial-scale=1.0">\n';
-				text += '	<meta http-equiv="X-UA-Compatible" content="ie=edge">\n';
-				text += '	<title>Document</title>\n';
-				text += '	<script src="app.js"></script>\n';
-				text += '	<script src="js/utils/colors.js"></script>\n';
-				text += '	<script src="js/utils/stats.js"></script>\n';
-				text += '	<link rel="stylesheet" href="style.css">\n';
-				text += '</head>\n\n';
-				text += '<body>\n';
-				text += '<h1 id="title"> Game: ' + name + '</h1>';
-				text += '</body>\n\n';
-				text += '</html>\n';
-				buffer = new Buffer(text, 'utf8');
+				buffer = new Buffer(createHTMLForGame(name), 'utf8');
 				fs.writeFileSync((dir + '/index.html'), buffer);
 
-				text = '/* Add your amazing style here! */\n';
-				text += '* {\n';
-				text += '	padding: 0px;\n';
-				text += '	margin: 0px;\n';
-				text += '}\n';
-
-				buffer = new Buffer(text, 'utf8');
+				buffer = new Buffer(createSimpleCSS(), 'utf8');
 				fs.writeFileSync((dir + '/style.css'), buffer);
 
 				var msj = '-> game created!'.blue.bold;
@@ -311,6 +221,106 @@ function addExtraFiles(dir) {
 			});
 		}
 	});
+}
+
+function createSimpleCSS() {
+	var text = '/* Add your amazing style here! */\n';
+	text += '* {\n';
+	text += '	padding: 0px;\n';
+	text += '	margin: 0px;\n';
+	text += '	font-family: Arial, Helvetica, sans-serif;\n'
+	text += '}\n';
+	return text;
+}
+
+function createHTMLForGame(name) {
+	var text = '<!DOCTYPE html>\n';
+	text += '<html lang="en">\n\n';
+	text += '<head>\n';
+	text += '	<meta charset="UTF-8">\n';
+	text += '	<meta name="viewport" content="width=device-width, initial-scale=1.0">\n';
+	text += '	<meta http-equiv="X-UA-Compatible" content="ie=edge">\n';
+	text += '	<title>Document</title>\n';
+	text += '	<script src="app.js"></script>\n';
+	text += '	<script src="js/utils/colors.js"></script>\n';
+	text += '	<script src="js/utils/stats.js"></script>\n';
+	text += '	<link rel="stylesheet" href="style.css">\n';
+	text += '</head>\n\n';
+	text += '<body>\n';
+	text += '<h1 id="title"> Game: ' + name + '</h1>';
+	text += '</body>\n\n';
+	text += '</html>\n';
+	return text;
+}
+
+function createJSForGame(configuration) {
+	var text = '/**\n';
+	text += '* @name app.js\n';
+	text += '* @file Add a small description for this file.\n';
+	text += '* @author ' + configuration.author + ' <' + configuration.email + '>\n';
+	text += '* @version 1.0.0\n';
+	text += '*/\n\n';
+	text += 'window.addEventListener(' + "'load'" + ', init, false);\n\n';
+	text += 'function init() {\n';
+	text += '	console.log(' + "'Game running!'" + ');\n';
+	text += '\n';
+	text += '	//Add Stats\n';
+	text += '	var stats = new Stats();\n';
+	text += '	stats.showPanel(0);\n';
+	text += '  	document.body.appendChild(stats.dom);\n';
+	text += '\n';
+	text += '	var requestId;\n';
+	text += '\n';
+	text += '	function update() {\n';
+	text += '		stats.begin();\n';
+	text += '\n';
+	text += '		//Add here your game code that needs to be update every frame.\n';
+	text += '		stats.end();\n';
+	text += '\n';
+	text += '		requestId = requestAnimationFrame(update);\n';
+	text += '	}\n';
+	text += '\n';
+	text += '	update();\n';
+	text += '\n';
+	text += '	//Add here your game code that does not needs to be update every frame.\n';
+	text += '}'
+	return text;
+}
+
+function createHTMLForProject(name) {
+	var text = '<!DOCTYPE html>\n';
+	text += '<html lang="en">\n\n';
+	text += '<head>\n';
+	text += '	<meta charset="UTF-8">\n';
+	text += '	<meta name="viewport" content="width=device-width, initial-scale=1.0">\n';
+	text += '	<meta http-equiv="X-UA-Compatible" content="ie=edge">\n';
+	text += '	<title>Document</title>\n';
+	text += '	<script src="app.js"></script>\n';
+	text += '	<script src="js/utils/colors.js"></script>\n';
+	text += '	<link rel="stylesheet" href="style.css">\n';
+	text += '</head>\n\n';
+	text += '<body>\n';
+	text += '<h1 id="title"> Project: ' + name + '</h1>';
+	text += '</body>\n\n';
+	text += '</html>\n';
+	return text;
+}
+
+function createJSForProject(configuration) {
+	var text = '/**\n';
+	text += '* @name app.js\n';
+	text += '* @file Add a small description for this file.\n';
+	text += '* @author ' + configuration.author + ' <' + configuration.email + '>\n';
+	text += '* @version 1.0.0\n';
+	text += '*/\n\n';
+	text += 'window.addEventListener(' + "'load'" + ', init, false);\n\n';
+	text += 'function init() {\n';
+	text += '	console.log(' + "'App running!'" + ');\n';
+	text += '	//1. Declare variables\n';
+	text += '	//2. Initialize variables\n';
+	text += '	//3. Program Logic\n';
+	text += '}'
+	return text;
 }
 
 coco.showHelp = function () {
