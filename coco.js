@@ -141,14 +141,12 @@ coco.createProject = function (name) {
 			if (err) {
 				console.log('Error making dir');
 			} else {
-				fs.readFile(process.cwd() + '/projectFiles/cocoColors.js', 'utf8', function (err, data) {
+				fs.readFile(__dirname + '/projectFiles/cocoColors.js', 'utf8', function (err, data) {
 					if (err) {
-						console.log('Error reading cocoColors file');
+						console.log('Error reading cocoColors file in: ' + __dirname);
 					} else {
-						//var buffer = new Buffer(text, 'utf8');
-						fs.writeFileSync((dir + '/colors.js'), data);
 
-						//Save cocoColors.js to project
+						fs.writeFileSync((dir + '/colors.js'), data);
 
 						var text = '/**\n';
 						text += '* @name index.js\n';
