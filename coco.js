@@ -145,7 +145,7 @@ coco.createProject = function (name) {
 				addExtraFiles(dir);
 
 				var buffer = new Buffer(createJSForProject(configuration), 'utf8');
-				fs.writeFileSync((dir + '/app.js'), buffer);
+				fs.writeFileSync((dir + '/js/app.js'), buffer);
 
 				buffer = new Buffer(createHTMLForProject(name), 'utf8');
 				fs.writeFileSync((dir + '/index.html'), buffer);
@@ -173,7 +173,7 @@ coco.createGame = function (name) {
 				addExtraFiles(dir);
 
 				var buffer = new Buffer(createJSForGame(configuration), 'utf8');
-				fs.writeFileSync((dir + '/app.js'), buffer);
+				fs.writeFileSync((dir + '/js/app.js'), buffer);
 
 				buffer = new Buffer(createHTMLForGame(name), 'utf8');
 				fs.writeFileSync((dir + '/index.html'), buffer);
@@ -367,7 +367,7 @@ coco.showHelp = function () {
 	msj += 'Update to the latest version using this command: npm update -g cococli\n'.bold;
 	msj += 'For support or comments send an email to ep@estebanpadilla.com\n'.bold;
 	msj += 'Thank you for using this tool!\n'.bold;
-	msj += 'v 1.3.3\n';
+	msj += 'v 1.3.4\n';
 	msj += '\n';
 	console.log(msj);
 }
