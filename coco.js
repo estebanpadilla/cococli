@@ -268,7 +268,7 @@ function createHTMLForGame(name) {
 	text += '	<script src="app.js"></script>\n';
 	text += '	<script src="js/utils/colors.js"></script>\n';
 	text += '	<script src="js/utils/stats.js"></script>\n';
-	text += '	<link rel="stylesheet" href="style.css">\n';
+	text += '	<link rel="stylesheet" href="css/style.css">\n';
 	text += '</head>\n\n';
 	text += '<body>\n';
 	text += '<h1 id="title"> Game: ' + name + '</h1>';
@@ -321,7 +321,7 @@ function createHTMLForProject(name) {
 	text += '	<title>Document</title>\n';
 	text += '	<script src="app.js"></script>\n';
 	text += '	<script src="js/utils/colors.js"></script>\n';
-	text += '	<link rel="stylesheet" href="style.css">\n';
+	text += '	<link rel="stylesheet" href="css/style.css">\n';
 	text += '</head>\n\n';
 	text += '<body>\n';
 	text += '<h1 id="title"> Project: ' + name + '</h1>';
@@ -367,7 +367,7 @@ coco.showHelp = function () {
 	msj += 'Update to the latest version using this command: npm update -g cococli\n'.bold;
 	msj += 'For support or comments send an email to ep@estebanpadilla.com\n'.bold;
 	msj += 'Thank you for using this tool!\n'.bold;
-	msj += 'v 1.3.2\n';
+	msj += 'v 1.3.3\n';
 	msj += '\n';
 	console.log(msj);
 }
