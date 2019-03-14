@@ -230,7 +230,20 @@ function createSimpleCSS() {
 	text += '	margin: 0px;\n';
 	text += '	font-family: Arial, Helvetica, sans-serif;\n'
 	text += '}\n';
-	return text;
+	text += '\n';
+	text += 'button {\n'
+	text += 'background:orangered;\n';
+	text += 'color: white;\n';
+	text += 'border: none;\n';
+	text += 'padding: 10px 10px 10px 10px;\n';
+	text += 'margin: 5px 10px 5px 10px;\n';
+	text += 'font: inherit;\n';
+	text += 'cursor: pointer;\n';
+	text += 'outline: inherit;\n';
+	text += '}\n';
+}
+
+return text;
 }
 
 function createHTMLForGame(name) {
