@@ -221,7 +221,7 @@ function addExtraFiles(dir) {
 		}
 	});
 
-	fs.mkdir('/css', function (err) {
+	fs.mkdir(dir + '/css', function (err) {
 		if (err) {
 			console.log('Error creating folder css');
 		} else {
@@ -367,7 +367,7 @@ coco.showHelp = function () {
 	msj += 'Update to the latest version using this command: npm update -g cococli\n'.bold;
 	msj += 'For support or comments send an email to ep@estebanpadilla.com\n'.bold;
 	msj += 'Thank you for using this tool!\n'.bold;
-	msj += 'v 1.3.1\n';
+	msj += 'v 1.3.2\n';
 	msj += '\n';
 	console.log(msj);
 }
