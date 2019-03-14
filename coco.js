@@ -355,7 +355,8 @@ coco.showHelp = function () {
 	msj += '-------------------------------------------------------------------------------\n';
 	msj += 'Update to the latest version using this command: npm update -g cococli\n'.bold;
 	msj += 'For support or comments send an email to ep@estebanpadilla.com\n'.bold;
-	msj += 'Thank you for using this tool!'.bold;
+	msj += 'Thank you for using this tool!\n'.bold;
+	msj += 'v 1.2.9\n';
 	msj += '\n';
 	console.log(msj);
 }
