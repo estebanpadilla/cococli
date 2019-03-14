@@ -150,8 +150,8 @@ coco.createProject = function (name) {
 				buffer = new Buffer(createHTMLForProject(name), 'utf8');
 				fs.writeFileSync((dir + '/index.html'), buffer);
 
-				buffer = new Buffer(createSimpleCSS(), 'utf8');
-				fs.writeFileSync((dir + '/style.css'), buffer);
+				//buffer = new Buffer(createSimpleCSS(), 'utf8');
+				//fs.writeFileSync((dir + '/style.css'), buffer);
 
 				var msj = '-> project created!'.blue.bold;
 				console.log(msj);
@@ -161,7 +161,6 @@ coco.createProject = function (name) {
 
 	});
 }
-
 
 coco.createGame = function (name) {
 	loadConfiguration().then(function (configuration) {
@@ -179,8 +178,8 @@ coco.createGame = function (name) {
 				buffer = new Buffer(createHTMLForGame(name), 'utf8');
 				fs.writeFileSync((dir + '/index.html'), buffer);
 
-				buffer = new Buffer(createSimpleCSS(), 'utf8');
-				fs.writeFileSync((dir + '/style.css'), buffer);
+				//buffer = new Buffer(createSimpleCSS(), 'utf8');
+				//fs.writeFileSync((dir + '/style.css'), buffer);
 
 				var msj = '-> game created!'.blue.bold;
 				console.log(msj);
@@ -217,6 +216,20 @@ function addExtraFiles(dir) {
 							});
 						}
 					});
+				}
+			});
+		}
+	});
+
+	fs.mkdir('/css', function (err) {
+		if (err) {
+			console.log('Error creating folder css');
+		} else {
+			fs.readFile(__dirname + '/projectFiles/style.css', 'utf8', function (err, style) {
+				if (err) {
+					console.log('Error reading style file');
+				} else {
+					fs.writeFileSync((dir + '/css/style.css'), style);
 				}
 			});
 		}
@@ -354,7 +367,7 @@ coco.showHelp = function () {
 	msj += 'Update to the latest version using this command: npm update -g cococli\n'.bold;
 	msj += 'For support or comments send an email to ep@estebanpadilla.com\n'.bold;
 	msj += 'Thank you for using this tool!\n'.bold;
-	msj += 'v 1.3.0\n';
+	msj += 'v 1.3.1\n';
 	msj += '\n';
 	console.log(msj);
 }
