@@ -41,6 +41,7 @@ function start() {
 			isOK = true;
 			break;
 		case '-proj':
+		case '-p':
 			coco.createProject(args[1]);
 			isOK = true;
 			break;
@@ -49,6 +50,11 @@ function start() {
 			isOK = true;
 			break;
 		case '-help':
+		case '-h':
+			coco.showHelp();
+			isOK = true;
+		case '-version':
+		case '-v':
 			coco.showHelp();
 			isOK = true;
 		default:

@@ -1,7 +1,7 @@
 /* Add your amazing style here! */
 * {
 	padding: 0px;
-	margin: 0px;
+	margin: 5px 5px 5px 5px;
 	font-family: Arial, Helvetica, sans-serif;
 }
 
@@ -10,8 +10,19 @@ button {
 	color: white;
 	border: none;
 	padding: 10px 10px 10px 10px;
-	margin: 5px 10px 5px 10px;
-	font: inherit;
+	font-size: 15px;
 	cursor: pointer;
 	outline: inherit;
+}
+
+input{
+	padding: 10px 10px 10px 10px;
+	font-size: 15px;
+	color: blue;
+}
+
+select {	
+	padding: 10px 10px 10px 10px;
+	font-size: 15px;
+	color:orangered;
 }

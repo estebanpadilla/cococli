@@ -12,6 +12,7 @@ var path = require('path');
 var colors = require('colors');
 
 var coco = {};
+var version = 'v 1.3.6';
 
 coco.saveEmail = function (email) {
 	loadConfiguration().then(function (configuration) {
@@ -349,25 +350,33 @@ function createJSForProject(configuration) {
 
 coco.showHelp = function () {
 	var msj = '\n';
-	msj += '-------------------------------------------------------------------------------\n';
-	msj += '                         Using this CLI is very simple!                       \n'.bold;
-	msj += '-------------------------------------------------------------------------------\n';
-	msj += '  Command  |   Arguments      |  Description                                 \n';
-	msj += '-------------------------------------------------------------------------------\n';
-	msj += '   -js     |   filename       |  Creates a javascrip file                    \n';
-	msj += '   -html   |   filename       |  Creates a html file                         \n';
-	msj += '   -css    |   filename       |  Creates a css file                          \n';
-	msj += '   -proj   |   name           |  Creates a basic web project                 \n';
-	msj += '   -game   |   name           |  Creates a basic game project                 \n';
-	msj += '   -class  |   name           |  Creates a ES6 class                         \n';
-	msj += '   -email  |   yourEmail      |  Adds your email to config file              \n';
-	msj += '   -author |   name lastName  |  Adds your name and lastname to config file  \n';
-	msj += '   -help   |                  |  Shows this information                      \n';
-	msj += '-------------------------------------------------------------------------------\n';
+	msj += '----------------------------------------------------------------------------------\n';
+	msj += '                         Using this CLI is very simple!                           \n'.bold;
+	msj += '----------------------------------------------------------------------------------\n';
+	msj += '  Command    	|   Parameters     |  Description                                 \n';
+	msj += '----------------------------------------------------------------------------------\n';
+	msj += '   -js       	|   filename       |  Creates a javascrip file                    \n';
+	msj += '   -html     	|   filename       |  Creates a html file                         \n';
+	msj += '   -css      	|   filename       |  Creates a css file                          \n';
+	msj += '   -proj -p    	|   name           |  Creates a basic web project                 \n';
+	msj += '   -game     	|   name           |  Creates a basic game project                \n';
+	msj += '   -class    	|   name           |  Creates a ES6 class                         \n';
+	msj += '   -email    	|   yourEmail      |  Adds your email to config file              \n';
+	msj += '   -author   	|   name lastName  |  Adds your name and lastname to config file  \n';
+	msj += '   -help, -h 	|                  |  Shows this information                      \n';
+	msj += '   -version, -v |                  |  Shows the version		                      \n';
+	msj += '----------------------------------------------------------------------------------\n';
 	msj += 'Update to the latest version using this command: npm update -g cococli\n'.bold;
 	msj += 'For support or comments send an email to ep@estebanpadilla.com\n'.bold;
 	msj += 'Thank you for using this tool!\n'.bold;
-	msj += 'v 1.3.5\n';
+	msj += version;
+	msj += '\n';
+	console.log(msj);
+}
+
+coco.showVersion = function () {
+	var msj = '\n';
+	msj += version.bold;
 	msj += '\n';
 	console.log(msj);
 }
