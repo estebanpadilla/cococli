@@ -55,7 +55,7 @@ function start() {
 			isOK = true;
 		case '-version':
 		case '-v':
-			coco.showHelp();
+			coco.showVersion();
 			isOK = true;
 		default:
 			break;

@@ -12,7 +12,7 @@ var path = require('path');
 var colors = require('colors');
 
 var coco = {};
-var version = 'v 1.3.6';
+var version = 'v 1.3.7';
 
 coco.saveEmail = function (email) {
 	loadConfiguration().then(function (configuration) {
