@@ -6,23 +6,29 @@
 }
 
 button {
-	background:orangered;
-	color: white;
-	border: none;
-	padding: 10px 10px 10px 10px;
-	font-size: 15px;
-	cursor: pointer;
-	outline: inherit;
+	height: 40px;
+	width: auto;
+    background-color: #941751; /* Green */
+    border: none;
+    color: white;
+    padding: 0px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+	font-size: 16px;
+	border-radius: 5px;
 }
 
 input{
-	padding: 10px 10px 10px 10px;
+	height: 40px;
 	font-size: 15px;
-	color: blue;
+	box-sizing: border-box;
+	appearance: none;
 }
 
 select {	
-	padding: 10px 10px 10px 10px;
+	height: 40px;
 	font-size: 15px;
-	color:orangered;
+	background:none;
+	border-color: lightgray;
 }
