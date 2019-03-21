@@ -46,6 +46,7 @@ function start() {
 			isOK = true;
 			break;
 		case '-game':
+		case '-g':
 			coco.createGame(args[1]);
 			isOK = true;
 			break;

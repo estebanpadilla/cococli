@@ -12,7 +12,7 @@ var path = require('path');
 var colors = require('colors');
 
 var coco = {};
-var version = 'v 1.3.8';
+var version = 'v 1.3.9';
 
 coco.saveEmail = function (email) {
 	loadConfiguration().then(function (configuration) {
@@ -237,27 +237,6 @@ function addExtraFiles(dir) {
 	});
 }
 
-function createSimpleCSS() {
-	var text = '/* Add your amazing style here! */\n';
-	text += '* {\n';
-	text += '	padding: 0px;\n';
-	text += '	margin: 0px;\n';
-	text += '	font-family: Arial, Helvetica, sans-serif;\n'
-	text += '}\n';
-	text += '\n';
-	text += 'button {\n'
-	text += 'background:orangered;\n';
-	text += 'color: white;\n';
-	text += 'border: none;\n';
-	text += 'padding: 10px 10px 10px 10px;\n';
-	text += 'margin: 5px 10px 5px 10px;\n';
-	text += 'font: inherit;\n';
-	text += 'cursor: pointer;\n';
-	text += 'outline: inherit;\n';
-	text += '}\n';
-	return text;
-}
-
 function createHTMLForGame(name) {
 	var text = '<!DOCTYPE html>\n';
 	text += '<html lang="en">\n\n';
@@ -350,25 +329,25 @@ function createJSForProject(configuration) {
 
 coco.showHelp = function () {
 	var msj = '\n';
-	msj += '----------------------------------------------------------------------------------\n';
-	msj += '                         Using this CLI is very simple!                           \n'.bold;
-	msj += '----------------------------------------------------------------------------------\n';
-	msj += '  Command    	|   Parameters     |  Description                                 \n';
-	msj += '----------------------------------------------------------------------------------\n';
-	msj += '   -js       	|   filename       |  Creates a javascrip file                    \n';
-	msj += '   -html     	|   filename       |  Creates a html file                         \n';
-	msj += '   -css      	|   filename       |  Creates a css file                          \n';
-	msj += '   -proj -p    	|   name           |  Creates a basic web project                 \n';
-	msj += '   -game     	|   name           |  Creates a basic game project                \n';
-	msj += '   -class    	|   name           |  Creates a ES6 class                         \n';
-	msj += '   -email    	|   yourEmail      |  Adds your email to config file              \n';
-	msj += '   -author   	|   name lastName  |  Adds your name and lastname to config file  \n';
-	msj += '   -help, -h 	|                  |  Shows this information                      \n';
-	msj += '   -version, -v |                  |  Shows the version		                      \n';
-	msj += '----------------------------------------------------------------------------------\n';
-	msj += 'Update to the latest version using this command: npm update -g cococli\n'.bold;
-	msj += 'For support or comments send an email to ep@estebanpadilla.com\n'.bold;
-	msj += 'Thank you for using this tool!\n'.bold;
+	msj += '-----------------------------------------------------------------------------------\n';
+	msj += '                         Using this CLI is very simple!                            \n'.bold;
+	msj += '-----------------------------------------------------------------------------------\n';
+	msj += '     Commands    |   Parameters     |  Description                                 \n';
+	msj += '-----------------------------------------------------------------------------------\n';
+	msj += '   -js      |  	 |   filename       |  Creates a javascrip file                    \n';
+	msj += '   -html    |  	 |   filename       |  Creates a html file                         \n';
+	msj += '   -css     |	 |   filename       |  Creates a css file                          \n';
+	msj += '   -proj    | -p |   name           |  Creates a basic web project                 \n';
+	msj += '   -game    | -g |   name           |  Creates a basic game project                \n';
+	msj += '   -class   |  	 |   name           |  Creates a ES6 class                         \n';
+	msj += '   -email   |  	 |   yourEmail      |  Adds your email to config file              \n';
+	msj += '   -author  |    |   name lastName  |  Adds your name and lastname to config file  \n';
+	msj += '   -help    | -h |                  |  Shows this information                      \n';
+	msj += '   -version | -v |                  |  Shows the version		                   \n';
+	msj += '-----------------------------------------------------------------------------------\n';
+	msj += 'Update to the latest version using this command: npm update -g cococli\n';
+	msj += 'For support or comments send an email to ep@estebanpadilla.com\n';
+	msj += 'Thank you for using this tool!\n';
 	msj += version;
 	msj += '\n';
 	console.log(msj);
