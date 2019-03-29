@@ -4,7 +4,7 @@
 * @name cli.js
 * @file Add a small description for this file.
 * @author Esteban Padilla <ep@estebanpadilla.com>
-* @version 1.3.1
+* @version 1.4.o
 */
 
 var coco = require('./coco');
