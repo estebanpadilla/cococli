@@ -8,13 +8,6 @@ To install just run the following command on your terminal. I usually install it
 npm i -g cococli 
 ```
 
-##Update
-If you want to update to the latest version use the follow command.
-
-```bash
-npm update -g cococli
-```
-
 ##Usage
 Here a simple table that show how to use it.
 ```
@@ -35,3 +28,13 @@ Here a simple table that show how to use it.
 	   -version | -v |                  |  Shows the version		                   
 ---------------------------------------------------------------------------------------
 ```
+
+##Update
+If you want to update to the latest version use the follow command.
+```bash
+npm update -g cococli
+```
+
+##Greetings
+For support or comments send me an email
+Thank you for using this tool!
