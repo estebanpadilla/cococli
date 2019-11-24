@@ -3,9 +3,9 @@ A small cli tool to help me develop.
 
 
 ## Installation
-To install just run the following command on your terminal. I usually install it on my machine globaly but can change that removing the -g.
+To install just run the following command on your terminal. I usually install it on my machine globaly but can change that removing the -g
 ```bash
-npm i -g cococli 
+sudo npm i -g cococli 
 ```
 
 ##Usage
@@ -37,7 +37,11 @@ npm update -g cococli
 
 ##Greetings
 For support or comments send me an email
+ep@estebanpadilla.com
 Thank you for using this tool!
+
+##Download source code 
+https://github.com/estebanpadilla/cococli.git
 
 ##Running on Developement
 node cli.js Commands Parameters
