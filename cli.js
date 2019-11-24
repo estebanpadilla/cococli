@@ -4,7 +4,7 @@
 * @name cli.js
 * @file Add a small description for this file.
 * @author Esteban Padilla <ep@estebanpadilla.com>
-* @version 1.4.6
+* @version 1.4.7
 * How to run on developement: node cli.js Commands Parameters
 */
 
@@ -55,10 +55,12 @@ function start() {
 		case '-h':
 			coco.showHelp();
 			isOK = true;
+			break;
 		case '-version':
 		case '-v':
 			coco.showVersion();
 			isOK = true;
+			break;
 		default:
 			break;
 	}
