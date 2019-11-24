@@ -2,7 +2,7 @@
 * @name coco.js
 * @file Charge of creating and saving files.
 * @author Esteban Padilla <ep@estebanpadilla.com>
-* @version 1.5.2
+* @version 1.5.3
 * @todo Add fileManager. configutationManager y errorManager.
 */
 
@@ -18,7 +18,7 @@ const rl = readline.createInterface({
 });
 
 var coco = {};
-var version = 'v 1.5.2';
+var version = 'v 1.5.3';
 
 coco.saveEmail = function (email) {
 	loadConfiguration().then(function (configuration) {
@@ -171,7 +171,7 @@ coco.createProject = function (name) {
 								buffer = Buffer.from(createHTMLForProject(name), 'utf8');
 								fs.writeFileSync((dir + '/index.html'), buffer);
 
-								var msj = '-> project created!'.blue.bold;
+								var msj = '-> project created!';
 								console.log(msj);
 							}
 						});
@@ -361,7 +361,7 @@ function createCSSForProject(configuration) {
 coco.showHelp = function () {
 	var msj = '\n';
 	msj += '-----------------------------------------------------------------------------------\n';
-	msj += '                         Using this CLI is very simple!                            \n'.bold;
+	msj += '                         Using this CLI is very simple!                            \n';
 	msj += '-----------------------------------------------------------------------------------\n';
 	msj += '     Commands    |   Parameters     |  Description                                 \n';
 	msj += '-----------------------------------------------------------------------------------\n';
