@@ -8,11 +8,11 @@ To install just run the following command on your terminal. I usually install it
 sudo npm i -g cococli 
 ```
 
-##Usage
+## Usage
 Here a simple table that show how to use it.
 ```
 ---------------------------------------------------------------------------------------
-	                         Using this CLI is very simple!                            
+	                	Using this CLI is very simple!  v 1.5.2                        
 ---------------------------------------------------------------------------------------
 	     Commands    |   Parameters     |  Description                                 
 ---------------------------------------------------------------------------------------
@@ -24,6 +24,7 @@ Here a simple table that show how to use it.
 	   -class   |  	 |   name           |  Creates a ES6 class                         
 	   -email   |  	 |   yourEmail      |  Adds your email to config file              
 	   -author  |    |   name lastName  |  Adds your name and lastname to config file  
+	   -config  |    |   			    |  Small wizard to setup your information.
 	   -help    | -h |                  |  Shows this information                      
 	   -version | -v |                  |  Shows the version		                   
 ---------------------------------------------------------------------------------------
@@ -39,16 +40,16 @@ If you add author and email, they will be automacally added to the files comment
 
 If you install this tool globaly, you may need to use sudo when adding author and email. 
 
-##Update
+## Update
 If you want to update to the latest version use the follow command.
 ```bash
 npm update -g cococli
 ```
 
-##Greetings
+## Greetings
 For support or comments send me an email
 ep@estebanpadilla.com
 Thank you for using this tool!
 
-##Download source code 
+## Download source code 
 https://github.com/estebanpadilla/cococli.git
