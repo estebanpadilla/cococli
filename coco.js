@@ -2,7 +2,7 @@
 * @name coco.js
 * @file Charge of creating and saving files.
 * @author Esteban Padilla <ep@estebanpadilla.com>
-* @version 1.4.3
+* @version 1.4.4
 * @todo Add fileManager. configutationManager y errorManager.
 */
 
@@ -20,6 +20,8 @@ coco.saveEmail = function (email) {
 		saveConfiguration(configuration);
 	}).catch(function (reject) {
 		//Do nothing here for now.
+		var msj = '-> Error saving email, you may need to use sudo'.red.bold;
+		console.log(msj);
 	});
 }
 
@@ -29,6 +31,8 @@ coco.saveAuthor = function (author) {
 		saveConfiguration(configuration)
 	}).catch(function (reject) {
 		//Do nothing here for now.
+		var msj = '-> Error saving author, you may need to use sudo'.red.bold;
+		console.log(msj);
 	});
 }
 

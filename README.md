@@ -28,6 +28,16 @@ Here a simple table that show how to use it.
 	   -version | -v |                  |  Shows the version		                   
 ---------------------------------------------------------------------------------------
 ```
+If you add author and email, they will be automacally added to the files comments when created, like so.
+
+/**
+* @name esteban.js
+* @file Add a small description for this file.
+* @author Esteban Padilla <ep@estebanpadilla.com>
+* @version 1.0.0
+*/
+
+If you install this tool globaly, you may need to use sudo when adding author and email. 
 
 ##Update
 If you want to update to the latest version use the follow command.
