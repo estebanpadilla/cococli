@@ -2,7 +2,7 @@
 * @name coco.js
 * @file Charge of creating and saving files.
 * @author Esteban Padilla <ep@estebanpadilla.com>
-* @version 1.5.0
+* @version 1.5.1
 * @todo Add fileManager. configutationManager y errorManager.
 */
 
@@ -19,7 +19,7 @@ const rl = readline.createInterface({
 });
 
 var coco = {};
-var version = 'v 1.5.0';
+var version = 'v 1.5.1';
 
 coco.saveEmail = function (email) {
 	loadConfiguration().then(function (configuration) {
@@ -436,7 +436,7 @@ coco.setupConfiguration = function () {
 			step = 3;
 		} else if (step === 3) {
 			email = input;
-			rl.close();
+			closeReadLine();
 			msj = '-> Cool, all setup!';
 			console.log(msj.blue.bold);
 			isOK = true;
@@ -455,6 +455,10 @@ coco.setupConfiguration = function () {
 		}
 	});
 	return true;
+}
+
+coco.closeReadLine = function () {
+	rl.close();
 }
 
 module.exports = coco;
