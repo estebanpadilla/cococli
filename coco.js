@@ -2,7 +2,7 @@
 * @name coco.js
 * @file Charge of creating and saving files.
 * @author Esteban Padilla <ep@estebanpadilla.com>
-* @version 1.4.7
+* @version 1.4.8
 * @todo Add fileManager. configutationManager y errorManager.
 */
 
@@ -12,7 +12,7 @@ var path = require('path');
 var colors = require('colors');
 
 var coco = {};
-var version = 'v 1.4.7';
+var version = 'v 1.4.8';
 
 coco.saveEmail = function (email) {
 	loadConfiguration().then(function (configuration) {
@@ -350,7 +350,7 @@ coco.showHelp = function () {
 	msj += '   -version | -v |                  |  Shows the version		                   \n';
 	msj += '-----------------------------------------------------------------------------------\n';
 	msj += 'Example:\n';
-	msj += 'coco js main\n';
+	msj += 'coco -js main\n';
 	msj += '\n';
 	msj += 'Update to the latest version using this command: npm update -g cococli\n';
 	msj += 'For support or comments send an email to ep@estebanpadilla.com\n';
