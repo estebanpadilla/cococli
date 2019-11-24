@@ -2,7 +2,7 @@
 * @name coco.js
 * @file Charge of creating and saving files.
 * @author Esteban Padilla <ep@estebanpadilla.com>
-* @version 1.4.8
+* @version 1.4.9
 * @todo Add fileManager. configutationManager y errorManager.
 */
 
@@ -12,7 +12,7 @@ var path = require('path');
 var colors = require('colors');
 
 var coco = {};
-var version = 'v 1.4.8';
+var version = 'v 1.4.9';
 
 coco.saveEmail = function (email) {
 	loadConfiguration().then(function (configuration) {
@@ -142,24 +142,35 @@ coco.createClass = function (name) {
 coco.createProject = function (name) {
 	loadConfiguration().then(function (configuration) {
 		var dir = path.resolve(process.cwd(), name);
+		var isOK = true;
 		fs.mkdir(dir, function (err) {
 			if (err) {
 				console.log('Error creating project, check if a project with the same name already exist.');
 			} else {
+				//addExtraFiles(dir);
+				fs.mkdir(dir + '/js', function (err) {
+					if (err) {
+						console.log('Error creating js dir on project.');
+					} else {
+						fs.mkdir(dir + '/css', function (err) {
+							if (err) {
+								console.log('Error creating css dir on prohect.');
+							} else {
+								var buffer = Buffer.from(createCSSForProject(configuration), 'utf8');
+								fs.writeFileSync((dir + '/css/style.css'), buffer);
 
-				addExtraFiles(dir);
+								buffer = Buffer.from(createJSForProject(configuration), 'utf8');
+								fs.writeFileSync((dir + '/js/app.js'), buffer);
 
-				var buffer = Buffer.from(createJSForProject(configuration), 'utf8');
-				fs.writeFileSync((dir + '/js/app.js'), buffer);
+								buffer = Buffer.from(createHTMLForProject(name), 'utf8');
+								fs.writeFileSync((dir + '/index.html'), buffer);
 
-				buffer = Buffer.from(createHTMLForProject(name), 'utf8');
-				fs.writeFileSync((dir + '/index.html'), buffer);
-
-				//buffer = new Buffer(createSimpleCSS(), 'utf8');
-				//fs.writeFileSync((dir + '/style.css'), buffer);
-
-				var msj = '-> project created!'.blue.bold;
-				console.log(msj);
+								var msj = '-> project created!'.blue.bold;
+								console.log(msj);
+							}
+						});
+					}
+				});
 			}
 		});
 	}).catch(function () {
@@ -302,9 +313,8 @@ function createHTMLForProject(name) {
 	text += '	<meta charset="UTF-8">\n';
 	text += '	<meta name="viewport" content="width=device-width, initial-scale=1.0">\n';
 	text += '	<meta http-equiv="X-UA-Compatible" content="ie=edge">\n';
-	text += '	<title>Document</title>\n';
+	text += '	<title>' + name + '</title>\n';
 	text += '	<script src="js/app.js"></script>\n';
-	text += '	<script src="js/utils/colors.js"></script>\n';
 	text += '	<link rel="stylesheet" href="css/style.css">\n';
 	text += '</head>\n\n';
 	text += '<body>\n';
@@ -328,6 +338,17 @@ function createJSForProject(configuration) {
 	text += '	//2. Initialize variables\n';
 	text += '	//3. Program Logic\n';
 	text += '}'
+	return text;
+}
+
+function createCSSForProject(configuration) {
+	var text = '/**\n';
+	text += '* @name style.css\n';
+	text += '* @file Add a small description for this file.\n';
+	text += '* @author ' + configuration.author + ' <' + configuration.email + '>\n';
+	text += '* @version 1.0.0\n';
+	text += '*/\n\n';
+	text += 'h1 {color:#0088cc;}\n';
 	return text;
 }
 
