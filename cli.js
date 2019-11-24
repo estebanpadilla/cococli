@@ -9,7 +9,6 @@
 */
 
 var coco = require('./coco');
-var colors = require('colors');
 
 function start() {
 
@@ -79,7 +78,7 @@ function start() {
 	}
 
 	if (!isOK) {
-		var msj = 'Error on command!'.bgRed.bold;
+		var msj = 'Error on command!';
 		console.log(msj);
 		coco.closeReadLine();
 	}

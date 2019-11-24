@@ -9,7 +9,6 @@
 var helpers = require('./lib/helpers');
 var fs = require('fs');
 var path = require('path');
-var colors = require('colors');
 
 const readline = require('readline');
 
@@ -27,7 +26,7 @@ coco.saveEmail = function (email) {
 		saveConfiguration(configuration);
 	}).catch(function (reject) {
 		//Do nothing here for now.
-		var msj = '-> Error saving email, you may need to use sudo'.red.bold;
+		var msj = '-> Error saving email, you may need to use sudo';
 		console.log(msj);
 	});
 }
@@ -38,7 +37,7 @@ coco.saveAuthor = function (author) {
 		saveConfiguration(configuration)
 	}).catch(function (reject) {
 		//Do nothing here for now.
-		var msj = '-> Error saving author, you may need to use sudo'.red.bold;
+		var msj = '-> Error saving author, you may need to use sudo';
 		console.log(msj);
 	});
 }
@@ -47,7 +46,7 @@ function loadConfiguration() {
 	return new Promise(function (resolve, reject) {
 		var file = fs.readFile((__dirname + '/configuration.json'), function (err, data) {
 			if (err) {
-				var msj = '-> There is not configuration available.'.red.bold;
+				var msj = '-> There is not configuration available.';
 				console.log(msj);
 				reject(null);
 			} else {
@@ -61,7 +60,7 @@ function loadConfiguration() {
 function saveConfiguration(configuration) {
 	var buffer = Buffer.from(JSON.stringify(configuration), 'utf8');
 	fs.writeFileSync(path.resolve(__dirname, './configuration.json'), buffer);
-	var msj = '-> Configuration saved, you can use the same command to change it anytime!'.blue.bold;
+	var msj = '-> Configuration saved, you can use the same command to change it anytime!';
 	console.log(msj);
 }
 
@@ -80,14 +79,14 @@ coco.createHTML = function (name) {
 	var buffer = Buffer.from(text, 'utf8')
 	fs.writeFileSync(path.resolve(process.cwd(), (name + '.html')), buffer);
 
-	var msj = '-> html file created!'.blue.bold;
+	var msj = '-> html file created!';
 	console.log(msj);
 }
 
 coco.createCSS = function (name) {
 	var buffer = Buffer.from('/* Add your amazing style here! */', 'utf8');
 	fs.writeFileSync(path.resolve(process.cwd(), (name + '.css')), buffer);
-	var msj = '-> css file created!'.blue.bold;
+	var msj = '-> css file created!';
 	console.log(msj);
 }
 
@@ -104,12 +103,12 @@ coco.createJS = function (name) {
 		var buffer = Buffer.from(text, 'utf8')
 		fs.writeFileSync(path.resolve(process.cwd(), (name + '.js')), buffer);
 
-		var msj = '-> javascript file created!'.blue.bold;
+		var msj = '-> javascript file created!';
 		console.log(msj);
 
 	}).catch(function (reject) {
 		//Do nothing here for now.
-		var msj = '-> Error loading configuration file.'.red.bold;
+		var msj = '-> Error loading configuration file.';
 		console.log(msj);
 	});
 }
@@ -138,7 +137,7 @@ coco.createClass = function (name) {
 		var buffer = Buffer.from(data, 'utf8');
 		fs.writeFileSync(path.resolve(process.cwd(), (name + '.js')), buffer);
 
-		var msj = '-> es6 class created!'.blue.bold;
+		var msj = '-> es6 class created!';
 		console.log(msj);
 
 	}).catch(function (reject) {
@@ -204,7 +203,7 @@ coco.createGame = function (name) {
 				//buffer = new Buffer(createSimpleCSS(), 'utf8');
 				//fs.writeFileSync((dir + '/style.css'), buffer);
 
-				var msj = '-> game created!'.blue.bold;
+				var msj = '-> game created!';
 				console.log(msj);
 			}
 		});
@@ -390,7 +389,7 @@ coco.showHelp = function () {
 
 coco.showVersion = function () {
 	var msj = '\n';
-	msj += version.bold;
+	msj += version;
 	msj += '\n';
 	console.log(msj);
 }
@@ -403,19 +402,24 @@ coco.setupConfiguration = function () {
 	var lastName = '';
 	var isOK = false;
 
-	console.log('If you want your name, lastname and email to automatically appear on the files you create with this tool follow these instructions.'.blue.bold);
-	console.log('Enter your name'.blue.bold);
+	console.log('If you want your name, lastname and email to automatically appear on the files you create with this tool follow these instructions.');
+	console.log('Enter your name');
+
+	rl.on('close', () => {
+		console.log('Have a great day!');
+		process.exit(0);
+	});
 
 	rl.on('line', (input) => {
 		switch (step) {
 			case 1:
-				msj = '-> Oops, no name was enter.\n-> Please enter your name or type exit to finish'.red.bold;
+				msj = '-> Oops, no name was enter.\n-> Please enter your name or type exit to finish';
 				break;
 			case 2:
-				msj = '-> Oops, no lastname was enter.\n-> Please enter your lastname or type exit to finish'.red.bold;
+				msj = '-> Oops, no lastname was enter.\n-> Please enter your lastname or type exit to finish';
 				break;
 			case 3:
-				msj = '-> Oops, no email was enter.\n-> Please enter your email or type exit to finish'.red.bold;
+				msj = '-> Oops, no email was enter.\n-> Please enter your email or type exit to finish';
 				break;
 		}
 
@@ -423,22 +427,22 @@ coco.setupConfiguration = function () {
 			console.log(msj);
 		} else if (input === 'exit') {
 			rl.close();
-			console.log('Bye!'.red.bold);
+			console.log('Bye!');
 		} else if (step === 1) {
 			name = input;
 			msj = '-> Hi ' + name + ', now enter your lastname.'
-			console.log(msj.blue.bold);
+			console.log(msj);
 			step = 2;
 		} else if (step === 2) {
 			lastName = input;
 			msj = '-> Hi ' + name + ' ' + lastName + ', now enter your email.'
-			console.log(msj.blue.bold);
+			console.log(msj);
 			step = 3;
 		} else if (step === 3) {
 			email = input;
-			closeReadLine();
+			rl.close();
 			msj = '-> Cool, all setup!';
-			console.log(msj.blue.bold);
+			console.log(msj);
 			isOK = true;
 		}
 
@@ -450,7 +454,7 @@ coco.setupConfiguration = function () {
 			}).catch(function (reject) {
 				//Do nothing here for now.
 				var msj = '-> Error saving your setup, please try again!';
-				console.log(msj.red.bold);
+				console.log(msj);
 			});
 		}
 	});
