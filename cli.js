@@ -4,7 +4,7 @@
 * @name cli.js
 * @file Add a small description for this file.
 * @author Esteban Padilla <ep@estebanpadilla.com>
-* @version 1.5.1
+* @version 1.5.2
 * How to run on developement: node cli.js Commands Parameters
 */
 
