@@ -1,3 +1,4 @@
 # Do not add Node Modules to repository
 node_modules
 testing
+.DS_Store

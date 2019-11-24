@@ -38,3 +38,12 @@ npm update -g cococli
 ##Greetings
 For support or comments send me an email
 Thank you for using this tool!
+
+##Running on Developement
+node cli.js Commands Parameters
+
+##Update npm 
+Change the version number, commit all changes to Github and then run on terminal.
+```bash
+npm publish --access public
+```

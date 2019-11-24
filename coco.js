@@ -2,7 +2,7 @@
 * @name coco.js
 * @file Charge of creating and saving files.
 * @author Esteban Padilla <ep@estebanpadilla.com>
-* @version 1.1.9
+* @version 1.4.1
 * @todo Add fileManager. configutationManager y errorManager.
 */
 
@@ -48,7 +48,7 @@ function loadConfiguration() {
 }
 
 function saveConfiguration(configuration) {
-	var buffer = new Buffer(JSON.stringify(configuration), 'utf8');
+	var buffer = Buffer.from(JSON.stringify(configuration), 'utf8');
 	fs.writeFileSync(path.resolve(__dirname, './configuration.json'), buffer);
 	var msj = '-> Configuration saved, you can use the same command to change it anytime!'.blue.bold;
 	console.log(msj);
@@ -66,7 +66,7 @@ coco.createHTML = function (name) {
 	text += '<body>\n'
 	text += '</body>\n\n'
 	text += '</html>\n'
-	var buffer = new Buffer(text, 'utf8');
+	var buffer = Buffer.from(text, 'utf8')
 	fs.writeFileSync(path.resolve(process.cwd(), (name + '.html')), buffer);
 
 	var msj = '-> html file created!'.blue.bold;
@@ -74,7 +74,7 @@ coco.createHTML = function (name) {
 }
 
 coco.createCSS = function (name) {
-	var buffer = new Buffer('/* Add your amazing style here! */', 'utf8');
+	var buffer = Buffer.from('/* Add your amazing style here! */', 'utf8');
 	fs.writeFileSync(path.resolve(process.cwd(), (name + '.css')), buffer);
 	var msj = '-> css file created!'.blue.bold;
 	console.log(msj);
@@ -90,7 +90,7 @@ coco.createJS = function (name) {
 		text += '* @author ' + configuration.author + ' <' + configuration.email + '>\n'
 		text += '* @version 1.0.0\n'
 		text += '*/';
-		var buffer = new Buffer(text, 'utf8');
+		var buffer = Buffer.from(text, 'utf8')
 		fs.writeFileSync(path.resolve(process.cwd(), (name + '.js')), buffer);
 
 		var msj = '-> javascript file created!'.blue.bold;
@@ -124,7 +124,7 @@ coco.createClass = function (name) {
 		data += '	constructor() {\n\n'
 		data += '	}\n';
 		data += '}';
-		var buffer = new Buffer(data, 'utf8');
+		var buffer = Buffer.from(data, 'utf8');
 		fs.writeFileSync(path.resolve(process.cwd(), (name + '.js')), buffer);
 
 		var msj = '-> es6 class created!'.blue.bold;
@@ -145,10 +145,10 @@ coco.createProject = function (name) {
 
 				addExtraFiles(dir);
 
-				var buffer = new Buffer(createJSForProject(configuration), 'utf8');
+				var buffer = Buffer.from(createJSForProject(configuration), 'utf8');
 				fs.writeFileSync((dir + '/js/app.js'), buffer);
 
-				buffer = new Buffer(createHTMLForProject(name), 'utf8');
+				buffer = Buffer.from(createHTMLForProject(name), 'utf8');
 				fs.writeFileSync((dir + '/index.html'), buffer);
 
 				//buffer = new Buffer(createSimpleCSS(), 'utf8');
@@ -173,10 +173,10 @@ coco.createGame = function (name) {
 
 				addExtraFiles(dir);
 
-				var buffer = new Buffer(createJSForGame(configuration), 'utf8');
+				var buffer = Buffer.from(createJSForGame(configuration), 'utf8');
 				fs.writeFileSync((dir + '/js/app.js'), buffer);
 
-				buffer = new Buffer(createHTMLForGame(name), 'utf8');
+				buffer = Buffer.from(createHTMLForGame(name), 'utf8');
 				fs.writeFileSync((dir + '/index.html'), buffer);
 
 				//buffer = new Buffer(createSimpleCSS(), 'utf8');
