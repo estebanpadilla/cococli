@@ -2,7 +2,7 @@
 * @name coco.js
 * @file Charge of creating and saving files.
 * @author Esteban Padilla <ep@estebanpadilla.com>
-* @version 1.4.9
+* @version 1.5.0
 * @todo Add fileManager. configutationManager y errorManager.
 */
 
@@ -11,8 +11,15 @@ var fs = require('fs');
 var path = require('path');
 var colors = require('colors');
 
+const readline = require('readline');
+
+const rl = readline.createInterface({
+	input: process.stdin,
+	output: process.stdout
+});
+
 var coco = {};
-var version = 'v 1.4.9';
+var version = 'v 1.5.0';
 
 coco.saveEmail = function (email) {
 	loadConfiguration().then(function (configuration) {
@@ -386,6 +393,68 @@ coco.showVersion = function () {
 	msj += version.bold;
 	msj += '\n';
 	console.log(msj);
+}
+
+coco.setupConfiguration = function () {
+	var msj = '';
+	var step = 1;
+	var name = '';
+	var email = '';
+	var lastName = '';
+	var isOK = false;
+
+	console.log('If you want your name, lastname and email to automatically appear on the files you create with this tool follow these instructions.'.blue.bold);
+	console.log('Enter your name'.blue.bold);
+
+	rl.on('line', (input) => {
+		switch (step) {
+			case 1:
+				msj = '-> Oops, no name was enter.\n-> Please enter your name or type exit to finish'.red.bold;
+				break;
+			case 2:
+				msj = '-> Oops, no lastname was enter.\n-> Please enter your lastname or type exit to finish'.red.bold;
+				break;
+			case 3:
+				msj = '-> Oops, no email was enter.\n-> Please enter your email or type exit to finish'.red.bold;
+				break;
+		}
+
+		if (input === '') {
+			console.log(msj);
+		} else if (input === 'exit') {
+			rl.close();
+			console.log('Bye!'.red.bold);
+		} else if (step === 1) {
+			name = input;
+			msj = '-> Hi ' + name + ', now enter your lastname.'
+			console.log(msj.blue.bold);
+			step = 2;
+		} else if (step === 2) {
+			lastName = input;
+			msj = '-> Hi ' + name + ' ' + lastName + ', now enter your email.'
+			console.log(msj.blue.bold);
+			step = 3;
+		} else if (step === 3) {
+			email = input;
+			rl.close();
+			msj = '-> Cool, all setup!';
+			console.log(msj.blue.bold);
+			isOK = true;
+		}
+
+		if (isOK) {
+			loadConfiguration().then(function (configuration) {
+				configuration.author = name + ' ' + lastName;
+				configuration.email = email;
+				saveConfiguration(configuration);
+			}).catch(function (reject) {
+				//Do nothing here for now.
+				var msj = '-> Error saving your setup, please try again!';
+				console.log(msj.red.bold);
+			});
+		}
+	});
+	return true;
 }
 
 module.exports = coco;

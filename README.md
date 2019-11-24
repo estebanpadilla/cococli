@@ -52,12 +52,3 @@ Thank you for using this tool!
 
 ##Download source code 
 https://github.com/estebanpadilla/cococli.git
-
-##Running on Developement
-node cli.js Commands Parameters
-
-##Update package to npm repo
-Change the version number, commit all changes to Github and then run on terminal.
-```bash
-npm publish --access public
-```
