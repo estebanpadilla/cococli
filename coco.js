@@ -2,7 +2,7 @@
 * @name coco.js
 * @file Charge of creating and saving files.
 * @author Esteban Padilla <ep@estebanpadilla.com>
-* @version 1.5.7
+* @version 1.5.8
 * @todo Add fileManager. configutationManager y errorManager.
 */
 
@@ -451,7 +451,7 @@ coco.setupConfiguration = function () {
 				configuration.author = name;
 				configuration.email = email;
 				saveConfiguration(configuration);
-				rl.close();
+				//rl.close();
 			}).catch(function (reject) {
 				//Do nothing here for now.
 				rl.close();
