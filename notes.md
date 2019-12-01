@@ -9,4 +9,3 @@
 ## Todo
 1. Improve configuration, request to name, lastname and email by steps. -> Completed
 2. Remove color dependecy. -> Completed
-3. 

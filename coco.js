@@ -2,7 +2,7 @@
 * @name coco.js
 * @file Charge of creating and saving files.
 * @author Esteban Padilla <ep@estebanpadilla.com>
-* @version 1.5.3
+* @version 1.5.4
 * @todo Add fileManager. configutationManager y errorManager.
 */
 
@@ -189,7 +189,7 @@ coco.createGame = function (name) {
 		var dir = path.resolve(process.cwd(), name);
 		fs.mkdir(dir, function (err) {
 			if (err) {
-				console.log('Error creating game, check if a game with the same name already exist.');
+				console.log('-> Error creating game, check if a game with the same name already exist.');
 			} else {
 
 				addExtraFiles(dir);
@@ -245,11 +245,11 @@ function addExtraFiles(dir) {
 
 	fs.mkdir(dir + '/css', function (err) {
 		if (err) {
-			console.log('Error creating folder css');
+			console.log('-> Error creating folder css');
 		} else {
 			fs.readFile(__dirname + '/projectFiles/style.css', 'utf8', function (err, style) {
 				if (err) {
-					console.log('Error reading style file');
+					console.log('-> Error reading style file');
 				} else {
 					fs.writeFileSync((dir + '/css/style.css'), style);
 				}
@@ -279,7 +279,8 @@ function createHTMLForGame(name) {
 }
 
 function createJSForGame(configuration) {
-	var text = '/**\n';
+	var text = '"use strict"';
+	text += '/**\n';
 	text += '* @name app.js\n';
 	text += '* @file Add a small description for this file.\n';
 	text += '* @author ' + configuration.author + ' <' + configuration.email + '>\n';
@@ -331,7 +332,8 @@ function createHTMLForProject(name) {
 }
 
 function createJSForProject(configuration) {
-	var text = '/**\n';
+	var text = '"use strict"';
+	text += '/**\n';
 	text += '* @name app.js\n';
 	text += '* @file Add a small description for this file.\n';
 	text += '* @author ' + configuration.author + ' <' + configuration.email + '>\n';
@@ -342,7 +344,8 @@ function createJSForProject(configuration) {
 	text += '	console.log(' + "'App running!'" + ');\n';
 	text += '	//1. Declare variables\n';
 	text += '	//2. Initialize variables\n';
-	text += '	//3. Program Logic\n';
+	text += '	//3. Events\n';
+	text += '	//4. Program Logic\n';
 	text += '}'
 	return text;
 }
@@ -399,26 +402,23 @@ coco.setupConfiguration = function () {
 	var step = 1;
 	var name = '';
 	var email = '';
-	var lastName = '';
 	var isOK = false;
 
-	console.log('If you want your name, lastname and email to automatically appear on the files you create with this tool follow these instructions.');
-	console.log('Enter your name');
+	console.log('-> If you want your name, lastname and email to automatically appear on the files you create with this tool follow these instructions.');
+	console.log('-> Enter your name');
 
 	rl.on('close', () => {
-		console.log('Have a great day!');
+		console.log('-> Have a great day!');
 		process.exit(0);
 	});
 
 	rl.on('line', (input) => {
+
 		switch (step) {
 			case 1:
 				msj = '-> Oops, no name was enter.\n-> Please enter your name or type exit to finish';
 				break;
 			case 2:
-				msj = '-> Oops, no lastname was enter.\n-> Please enter your lastname or type exit to finish';
-				break;
-			case 3:
 				msj = '-> Oops, no email was enter.\n-> Please enter your email or type exit to finish';
 				break;
 		}
@@ -427,20 +427,14 @@ coco.setupConfiguration = function () {
 			console.log(msj);
 		} else if (input === 'exit') {
 			rl.close();
-			console.log('Bye!');
+			console.log('-> Bye!');
 		} else if (step === 1) {
 			name = input;
-			msj = '-> Hi ' + name + ', now enter your lastname.'
+			msj = '-> Hi ' + name + ', now enter your email.'
 			console.log(msj);
 			step = 2;
 		} else if (step === 2) {
-			lastName = input;
-			msj = '-> Hi ' + name + ' ' + lastName + ', now enter your email.'
-			console.log(msj);
-			step = 3;
-		} else if (step === 3) {
 			email = input;
-			rl.close();
 			msj = '-> Cool, all setup!';
 			console.log(msj);
 			isOK = true;
@@ -448,11 +442,13 @@ coco.setupConfiguration = function () {
 
 		if (isOK) {
 			loadConfiguration().then(function (configuration) {
-				configuration.author = name + ' ' + lastName;
+				configuration.author = name;
 				configuration.email = email;
 				saveConfiguration(configuration);
+				rl.close();
 			}).catch(function (reject) {
 				//Do nothing here for now.
+				rl.close();
 				var msj = '-> Error saving your setup, please try again!';
 				console.log(msj);
 			});
