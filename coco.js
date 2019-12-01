@@ -2,7 +2,7 @@
 * @name coco.js
 * @file Charge of creating and saving files.
 * @author Esteban Padilla <ep@estebanpadilla.com>
-* @version 1.5.6
+* @version 1.5.7
 * @todo Add fileManager. configutationManager y errorManager.
 */
 
@@ -58,11 +58,15 @@ function loadConfiguration() {
 }
 
 function saveConfiguration(configuration) {
-	console.log('-> saveConfiguration');
-	var buffer = Buffer.from(JSON.stringify(configuration), 'utf8');
-	fs.writeFileSync(path.resolve(__dirname, './configuration.json'), buffer);
-	var msj = '-> Configuration saved, you can use the same command to change it anytime!';
-	console.log(msj);
+	try {
+		var buffer = Buffer.from(JSON.stringify(configuration), 'utf8');
+		fs.writeFileSync(path.resolve(__dirname, './configuration.json'), buffer);
+		var msj = '-> Configuration saved, you can use the same command to change it anytime!';
+		console.log(msj);
+	} catch (error) {
+		var msj = '-> There was an error saving configuration, sorry.';
+		console.log(msj);
+	}
 }
 
 coco.createHTML = function (name) {
@@ -442,6 +446,7 @@ coco.setupConfiguration = function () {
 		}
 
 		if (isOK) {
+
 			loadConfiguration().then(function (configuration) {
 				configuration.author = name;
 				configuration.email = email;
