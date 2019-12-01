@@ -4,7 +4,7 @@
 * @name cli.js
 * @file Add a small description for this file.
 * @author Esteban Padilla <ep@estebanpadilla.com>
-* @version 1.5.4
+* @version 1.5.5
 * How to run on developement: node cli.js Commands Parameters
 */
 
@@ -15,7 +15,7 @@ function start() {
 	var isOK = false;
 	var args = process.argv.slice(2);
 
-	switch ('-config') {
+	switch (args[0]) {
 		case '-js':
 			coco.createJS(args[1]);
 			isOK = true;

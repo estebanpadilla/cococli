@@ -1,6 +1,6 @@
 {
   "name": "cococli",
-  "version": "1.5.4",
+  "version": "1.5.5",
   "description": "A small cli tool for personal use.",
   "main": "cli.js",
   "bin": {

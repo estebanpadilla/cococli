@@ -2,7 +2,7 @@
 * @name coco.js
 * @file Charge of creating and saving files.
 * @author Esteban Padilla <ep@estebanpadilla.com>
-* @version 1.5.4
+* @version 1.5.5
 * @todo Add fileManager. configutationManager y errorManager.
 */
 
