@@ -2,7 +2,7 @@
 * @name coco.js
 * @file Charge of creating and saving files.
 * @author Esteban Padilla <ep@estebanpadilla.com>
-* @version 1.5.8
+* @version 1.6.0
 * @todo Add fileManager. configutationManager y errorManager.
 */
 
@@ -18,7 +18,7 @@ const rl = readline.createInterface({
 });
 
 var coco = {};
-var version = 'v 1.5.3';
+var version = 'v 1.6.0';
 
 coco.saveEmail = function (email) {
 	loadConfiguration().then(function (configuration) {
@@ -381,11 +381,14 @@ coco.showHelp = function () {
 	msj += '   -class   |  	 |   name           |  Creates a ES6 class                         \n';
 	msj += '   -email   |  	 |   yourEmail      |  Adds your email to config file              \n';
 	msj += '   -author  |    |   name lastName  |  Adds your name and lastname to config file  \n';
+	msj += '   -config  |    |     				|  Small wizard to setup your information you. \n';
 	msj += '   -help    | -h |                  |  Shows this information                      \n';
 	msj += '   -version | -v |                  |  Shows the version		                   \n';
 	msj += '-----------------------------------------------------------------------------------\n';
 	msj += 'Example:\n';
 	msj += 'coco -js main\n';
+	msj += '\n';
+	msj += 'When running -config you may need to use sudo due to permissions on your OS.'
 	msj += '\n';
 	msj += 'Update to the latest version using this command: npm update -g cococli\n';
 	msj += 'For support or comments send an email to ep@estebanpadilla.com\n';
@@ -451,7 +454,7 @@ coco.setupConfiguration = function () {
 				configuration.author = name;
 				configuration.email = email;
 				saveConfiguration(configuration);
-				//rl.close();
+				rl.close();
 			}).catch(function (reject) {
 				//Do nothing here for now.
 				rl.close();

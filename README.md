@@ -31,6 +31,8 @@ Here a simple table that show how to use it.
 ```
 If you add author and email, they will be automacally added to the files comments when created, like so.
 
+When running -config you may need to use sudo due to permissions on your OS.
+
 /**
 * @name esteban.js
 * @file Add a small description for this file.
