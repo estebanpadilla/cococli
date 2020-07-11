@@ -18,7 +18,7 @@ const rl = readline.createInterface({
 });
 
 var coco = {};
-var version = 'v 1.6.1';
+var version = 'v 1.6.2';
 
 coco.saveEmail = function (email) {
     loadConfiguration().then(function (configuration) {
