@@ -4,6 +4,7 @@
 ## Update package to npm repo
 1. Change the version number.
 2. Commit all changes to Github.
+3. Make sure your are logged in to npm.
 3. Run on terminal -> npm publish --access public
 
 ## Todo
