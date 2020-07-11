@@ -18,7 +18,7 @@ const rl = readline.createInterface({
 });
 
 var coco = {};
-var version = 'v 1.6.3';
+var version = 'v 1.6.4';
 
 coco.saveEmail = function (email) {
     loadConfiguration().then(function (configuration) {
@@ -118,7 +118,6 @@ coco.createJS = function (name) {
     });
 }
 
-
 coco.createClass = function (name) {
 
     loadConfiguration().then(function (configuration) {
@@ -190,7 +189,6 @@ coco.createProject = function (name) {
 }
 
 coco.createWebpackProject = function (name) {
-    console.log('createWebpackProject');
     loadConfiguration().then(function (configuration) {
         var dir = path.resolve(process.cwd(), name);
         var isOK = true;
