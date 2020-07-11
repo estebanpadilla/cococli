@@ -52,6 +52,11 @@ function start() {
 			isOK = true;
 			coco.closeReadLine();
 			break;
+		case '-wp':
+			coco.createWebpackProject(args[1]);
+			isOK = true;
+			coco.closeReadLine();
+			break;
 		case '-game':
 		case '-g':
 			coco.createGame(args[1]);
