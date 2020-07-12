@@ -15,51 +15,54 @@ function start() {
 	var isOK = false;
 	var args = process.argv.slice(2);
 
-	switch (args[0]) {
+	const command = args[0];
+	const name = args[1];
+
+	switch (command) {
 		case '-js':
-			coco.createJS(args[1]);
+			coco.createJS(name);
 			isOK = true;
 			coco.closeReadLine();
 			break;
 		case '-html':
-			coco.createHTML(args[1]);
+			coco.createHTML(name);
 			isOK = true;
 			coco.closeReadLine();
 			break;
 		case '-css':
-			coco.createCSS(args[1]);
+			coco.createCSS(name);
 			isOK = true;
 			coco.closeReadLine();
 			break;
 		case '-class':
-			coco.createClass(args[1]);
+			coco.createClass(name);
 			isOK = true;
 			coco.closeReadLine();
 			break;
 		case '-email':
-			coco.saveEmail(args[1]);
+			coco.saveEmail(name);
 			isOK = true;
 			coco.closeReadLine();
 			break;
 		case '-author':
-			coco.saveAuthor(args[1] + ' ' + args[2]);
+			coco.saveAuthor(name + ' ' + args[2]);
 			isOK = true;
 			coco.closeReadLine();
 			break;
 		case '-proj':
 		case '-p':
-			coco.createProject(args[1]);
+			coco.createProject(name);
 			isOK = true;
 			coco.closeReadLine();
 			break;
 		case '-wp':
-			coco.createWebpackProject(args[1]);
+			coco.createWebpackProject(name);
 			isOK = true;
 			coco.closeReadLine();
 			break;
 		case '-game':
 		case '-g':
-			coco.createGame(args[1]);
+			coco.createGame(name);
 			isOK = true;
 			coco.closeReadLine();
 			break;

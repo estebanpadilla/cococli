@@ -18,7 +18,7 @@ const rl = readline.createInterface({
 });
 
 var coco = {};
-var version = 'v 1.6.4';
+var version = 'v 1.6.6';
 
 coco.saveEmail = function (email) {
     loadConfiguration().then(function (configuration) {
@@ -70,20 +70,20 @@ function saveConfiguration(configuration) {
 }
 
 coco.createHTML = function (name) {
-    var text = '<!DOCTYPE html>\n'
-    text += '<html lang="en">\n\n'
-    text += '<head>\n'
-    text += '	<meta charset="UTF-8">\n'
-    text += '	<meta name="viewport" content="width=device-width, initial-scale=1.0">\n'
-    text += '	<meta http-equiv="X-UA-Compatible" content="ie=edge">\n'
-    text += '	<title>Document</title>\n'
-    text += '</head>\n\n'
-    text += '<body>\n'
-    text += '</body>\n\n'
-    text += '</html>\n'
-    var buffer = Buffer.from(text, 'utf8')
+    var text = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>${name}</title>
+</head>
+<body>
+</body>
+</html>`;
+    var buffer = Buffer.from(text, 'utf8');
     fs.writeFileSync(path.resolve(process.cwd(), (name + '.html')), buffer);
-
     var msj = '-> html file created!';
     console.log(msj);
 }
@@ -98,13 +98,13 @@ coco.createCSS = function (name) {
 coco.createJS = function (name) {
 
     loadConfiguration().then(function (configuration) {
-
-        var text = '/**\n';
-        text += '* @name ' + name + '.js\n';
-        text += '* @file Add a small description for this file.\n'
-        text += '* @author ' + configuration.author + ' <' + configuration.email + '>\n'
-        text += '* @version 1.0.0\n'
-        text += '*/';
+        var text = `
+/**
+* @name ${ name }
+* @file Add a small description for this file.
+* @author ${ configuration.author } ${ configuration.email }
+* @version 1.0.0
+*/`;
         var buffer = Buffer.from(text, 'utf8')
         fs.writeFileSync(path.resolve(process.cwd(), (name + '.js')), buffer);
 
@@ -121,23 +121,23 @@ coco.createJS = function (name) {
 coco.createClass = function (name) {
 
     loadConfiguration().then(function (configuration) {
-
         var className = helpers.capitalizeFirstLetter(name);
-
-        var data = '/**\n';
-        data += '* @name ' + className + '\n';
-        data += '* @extends\n';
-        data += '* @file ' + name + '.js\n'
-        data += '* @author ' + configuration.author + ' <' + configuration.email + '>\n'
-        data += '* @version 1.0.0\n'
-        data += '*/\n';
-        data += 'class ' + className + ' {\n';
-        data += '	/**\n';
-        data += '	* @param {data type} name - description.\n';
-        data += '	*/\n';
-        data += '	constructor() {\n\n'
-        data += '	}\n';
-        data += '}';
+        var data = `
+/**
+* @name ${className} 
+* @extends
+* @file ${ name }.js
+* @author ${configuration.author} ${configuration.email} 
+* @version 1.0.0
+*/
+class ${className} {
+    /**
+    * @param {data type} name - description.
+    */
+    constructor() {
+        
+    }
+}`;
         var buffer = Buffer.from(data, 'utf8');
         fs.writeFileSync(path.resolve(process.cwd(), (name + '.js')), buffer);
 
@@ -381,7 +381,8 @@ function createHTMLForProject(name) {
     text += '	<link rel="stylesheet" href="css/style.css">\n';
     text += '</head>\n\n';
     text += '<body>\n';
-    text += '	<h1 id="title"> Project: ' + name + '</h1>\n';
+    text += '	<h1 id="title">Project: ' + name + '</h1>\n';
+    text += '	<h2 id="subtitle">Description: ' + name + '</h2>\n';
     text += '</body>\n\n';
     text += '</html>\n';
     return text;
@@ -400,6 +401,7 @@ function createHTMLForWebpackProject(name) {
     text += '</head>\n\n';
     text += '<body>\n';
     text += '	<h1 id="title">Project: ' + name + '</h1>\n';
+    text += '	<h2 id="subtitle">Description: ' + name + '</h2>\n';
     text += '</body>\n\n';
     text += '</html>\n';
     return text;
@@ -427,7 +429,7 @@ function createJSForProject(configuration) {
 function createPackageForProject(configuration, name) {
     var text = `
 {
-    "name": "${ name }",
+    "name": "${name}",
     "version": "1.0.0",
     "description": "",
     "main": "app.js",
@@ -454,48 +456,56 @@ function createMainForWebpackProject(configuration) {
 }
 
 function createCSSForProject(configuration) {
-    var text = '/**\n';
-    text += '* @name style.css\n';
-    text += '* @file Add a small description for this file.\n';
-    text += '* @author ' + configuration.author + ' <' + configuration.email + '>\n';
-    text += '* @version 1.0.0\n';
-    text += '*/\n\n';
-    text += 'h1 {color:#0088cc;}\n';
+    var text = `
+/**
+* @name style.css
+* @file Add a small description for this file.
+* @author ${configuration.author} ${configuration.email}
+* @version 1.0.0
+*/
+    
+:root {
+    --primary-color: #263238;
+    --secondary-color: #f50057;
+}
+
+* { padding: 0; margin: 0; font-family: Arial, Helvetica, sans-serif; }
+h1 { color:var(--main-color) }
+h2 { color:var(--secondary-color) }`;
     return text;
 }
 
 coco.showHelp = function () {
-    var msj = '\n';
-    msj += '---------------------------------------------------------------------------------------\n';
-    msj += '                          Using this CLI is very simple!                               \n';
-    msj += '---------------------------------------------------------------------------------------\n';
-    msj += '     Commands      |   Parameters     |  Description                                   \n';
-    msj += '---------------------------------------------------------------------------------------\n';
-    msj += '   -js      |  	   |   filename       |  Creates a javascrip file                      \n';
-    msj += '   -html    |  	   |   filename       |  Creates a html file                           \n';
-    msj += '   -css     |	   |   filename       |  Creates a css file                            \n';
-    msj += '   -proj    |  -p  |   name           |  Creates a basic web project                   \n';
-    msj += '   -webpack | -wp  |   name           |  Creates a basic webpack project               \n';
-    msj += '   -game    |  -g  |   name           |  Creates a basic game project                  \n';
-    msj += '   -class   |  	   |   name           |  Creates a ES6 class                           \n';
-    msj += '   -email   |  	   |   yourEmail      |  Adds your email to config file                \n';
-    msj += '   -author  |      |   name lastName  |  Adds your name and lastname to config file.   \n';
-    msj += '   -config  |      |     			  |  Small wizard to setup your information you.   \n';
-    msj += '   -help    |  -h  |                  |  Shows this information                        \n';
-    msj += '   -version |  -v  |                  |  Shows the version		                       \n';
-    msj += '---------------------------------------------------------------------------------------\n';
-    msj += 'Example:\n';
-    msj += 'coco -js main\n';
-    msj += '\n';
-    msj += 'When running -config you may need to use sudo due to permissions on your OS.'
-    msj += '\n';
-    msj += 'Update to the latest version using this command: npm update -g cococli\n';
-    msj += 'For Webpack project you will need to run: npm install on the root folder after creation\n';
-    msj += 'To run the Webpack project on the browser use: npm run dev\n';
-    msj += 'For support or comments send an email to ep@estebanpadilla.com\n';
-    msj += 'Thank you for using this tool!\n';
-    msj += version;
-    msj += '\n';
+    var msj = `
+---------------------------------------------------------------------------------------
+                          Using this CLI is very simple!                               
+---------------------------------------------------------------------------------------
+     Commands      |   Parameters     |  Description                                   
+---------------------------------------------------------------------------------------
+   -js      |  	   |   filename       |  Creates a javascript file                      
+   -html    |  	   |   filename       |  Creates a html file                           
+   -css     |	   |   filename       |  Creates a css file                            
+   -proj    |  -p  |   name           |  Creates a basic web project                   
+   -webpack | -wp  |   name           |  Creates a basic webpack project               
+   -game    |  -g  |   name           |  Creates a basic game project                  
+   -class   |  	   |   name           |  Creates a ES6 class                           
+   -email   |  	   |   yourEmail      |  Adds your email to config file                
+   -author  |      |   name lastName  |  Adds your name and last name to config file.   
+   -config  |      |     			  |  Small wizard to setup your information you.   
+   -help    |  -h  |                  |  Shows this information                        
+   -version |  -v  |                  |  Shows the version		                       
+---------------------------------------------------------------------------------------
+Example:
+coco -js main
+
+When running -config you may need to use sudo due to permissions on your OS.
+
+Update to the latest version using this command: npm update -g cococli
+For Webpack project you will need to run: npm install on the root folder after creation
+To run the Webpack project on the browser use: npm run dev
+For support or comments send an email to ep@estebanpadilla.com
+Thank you for using this tool!
+version:${version}`;
     console.log(msj);
 }
 
