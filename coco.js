@@ -18,7 +18,7 @@ const rl = readline.createInterface({
 });
 
 var coco = {};
-var version = 'v 1.6.6';
+var version = 'v 1.6.8';
 
 coco.saveEmail = function (email) {
     loadConfiguration().then(function (configuration) {
@@ -211,15 +211,18 @@ coco.createWebpackProject = function (name) {
                                         console.log('Error creating css dir on project.');
                                     } else {
                                         var buffer = Buffer.from(createMainForWebpackProject(configuration), 'utf8');
-                                        fs.writeFileSync((dir + '/dist/main.js'), buffer);
+                                        fs.writeFileSync((dir + '/dist/bundle.js'), buffer);
 
                                         buffer = Buffer.from(createPackageForProject(configuration, name), 'utf8');
                                         fs.writeFileSync((dir + '/package.json'), buffer);
 
+                                        buffer = Buffer.from(createWebPackConfigFile(configuration, name), 'utf8');
+                                        fs.writeFileSync((dir + '/webpack.config.js'), buffer);
+
                                         buffer = Buffer.from(createCSSForProject(configuration), 'utf8');
                                         fs.writeFileSync((dir + '/css/style.css'), buffer);
 
-                                        buffer = Buffer.from(createJSForProject(configuration), 'utf8');
+                                        buffer = Buffer.from(createAppJSForWPProject(configuration), 'utf8');
                                         fs.writeFileSync((dir + '/js/app.js'), buffer);
 
                                         buffer = Buffer.from(createHTMLForWebpackProject(name), 'utf8');
@@ -396,8 +399,7 @@ function createHTMLForWebpackProject(name) {
     text += '	<meta name="viewport" content="width=device-width, initial-scale=1.0">\n';
     text += '	<meta http-equiv="X-UA-Compatible" content="ie=edge">\n';
     text += '	<title>' + name + '</title>\n';
-    text += '	<script src="dist/main.js"></script>\n';
-    text += '	<link rel="stylesheet" href="css/style.css">\n';
+    text += '	<script src="dist/bundle.js"></script>\n';
     text += '</head>\n\n';
     text += '<body>\n';
     text += '	<h1 id="title">Project: ' + name + '</h1>\n';
@@ -408,21 +410,50 @@ function createHTMLForWebpackProject(name) {
 }
 
 function createJSForProject(configuration) {
-    var text = '"use strict"';
-    text += '/**\n';
-    text += '* @name app.js\n';
-    text += '* @file Add a small description for this file.\n';
-    text += '* @author ' + configuration.author + ' <' + configuration.email + '>\n';
-    text += '* @version 1.0.0\n';
-    text += '*/\n\n';
-    text += 'window.addEventListener(' + "'load'" + ', init, false);\n\n';
-    text += 'function init() {\n';
-    text += '	console.log(' + "'App running!'" + ');\n';
-    text += '	//1. Declare variables\n';
-    text += '	//2. Initialize variables\n';
-    text += '	//3. Events\n';
-    text += '	//4. Program Logic\n';
-    text += '}'
+    var text =`
+/**
+* @name app.js
+* @file Add a small description for this file.
+* @author ' + configuration.author + ' <' + configuration.email + '>
+* @version 1.0.0
+*/
+
+"use strict";
+
+window.addEventListener('load', init, false);
+
+function init() {
+    console.log('App running!');
+    //1. Declare variables
+    //2. Initialize variables
+    //3. Events
+    //4. Program Logic
+}`;
+    return text;
+}
+
+function createAppJSForWPProject(configuration) {
+    var text =`
+/**
+* @name app.js
+* @file Add a small description for this file.
+* @author ' + configuration.author + ' <' + configuration.email + '>
+* @version 1.0.0
+*/
+
+"use strict";
+import '../css/style.css';
+import '../index.html'
+
+window.addEventListener('load', init, false);
+
+function init() {
+    console.log('App running!');
+    //1. Declare variables
+    //2. Initialize variables
+    //3. Events
+    //4. Program Logic
+}`;
     return text;
 }
 
@@ -435,18 +466,53 @@ function createPackageForProject(configuration, name) {
     "main": "app.js",
     "scripts": {
         "test": "echo \\"Error: no test specified\\" && exit 1",
-        "dev": "webpack-dev-server --entry ./js/app.js --output-filename ./dist/main.js",
-        "build:prod": "webpack js/app.js dist/main.js -p"
+        "start": "webpack-dev-server",
+        "build": "webpack -p"
     },
     "author": "Add your name here",
     "license": "MIT",
     "dependencies": {},
     "devDependencies": {
-        "webpack": "^4.43.0",
-        "webpack-cli": "^3.3.12",
-        "webpack-dev-server": "^3.11.0"
+        "css-loader": "*",
+        "style-loader": "*",
+        "html-loader": "*",
+        "webpack": "*",
+        "webpack-cli": "*",
+        "webpack-dev-server": "*"
     }
 }`;
+    return text;
+}
+
+
+function createWebPackConfigFile(configuration, name) {
+    var text = `
+var path = require('path');
+
+module.exports = {
+    entry:"./js/app.js",
+    output:{
+        path:path.resolve(__dirname, 'dist'),
+        filename:"bundle.js",
+        publicPath:"dist"
+    },    
+    module: {
+        rules:[
+            {
+                test: /\\.html$/i,
+                loader: 'html-loader',
+            },
+            {
+                test: /\\.css$/,
+                use: [
+                    'style-loader', 
+                    'css-loader'
+                ]
+            }
+        ]
+    }
+}
+`;
     return text;
 }
 
@@ -477,6 +543,13 @@ h2 { color:var(--secondary-color) }`;
 
 coco.showHelp = function () {
     var msj = `
+---------------------------------------------------------------------------------------     
+             ██████╗ ██████╗  ██████╗ ██████╗      ██████╗██╗     ██╗
+            ██╔════╝██╔═══██╗██╔════╝██╔═══██╗    ██╔════╝██║     ██║
+            ██║     ██║   ██║██║     ██║   ██║    ██║     ██║     ██║
+            ██║     ██║   ██║██║     ██║   ██║    ██║     ██║     ██║
+            ╚██████╗╚██████╔╝╚██████╗╚██████╔╝    ╚██████╗███████╗██║
+             ╚═════╝ ╚═════╝  ╚═════╝ ╚═════╝      ╚═════╝╚══════╝╚═╝                               
 ---------------------------------------------------------------------------------------
                           Using this CLI is very simple!                               
 ---------------------------------------------------------------------------------------
@@ -502,7 +575,7 @@ When running -config you may need to use sudo due to permissions on your OS.
 
 Update to the latest version using this command: npm update -g cococli
 For Webpack project you will need to run: npm install on the root folder after creation
-To run the Webpack project on the browser use: npm run dev
+To run the Webpack project on the browser use: npm start
 For support or comments send an email to ep@estebanpadilla.com
 Thank you for using this tool!
 version:${version}`;
