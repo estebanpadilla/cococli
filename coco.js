@@ -11,6 +11,8 @@ var fs = require('fs');
 var path = require('path');
 
 const readline = require('readline');
+const htmlFactory = require('./htmlFactory');
+const jsFactory = require('./jsFactory');
 
 const rl = readline.createInterface({
     input: process.stdin,
@@ -18,7 +20,7 @@ const rl = readline.createInterface({
 });
 
 var coco = {};
-var version = 'v 1.6.8';
+var version = 'v 1.6.9';
 
 coco.saveEmail = function (email) {
     loadConfiguration().then(function (configuration) {
@@ -70,19 +72,7 @@ function saveConfiguration(configuration) {
 }
 
 coco.createHTML = function (name) {
-    var text = `
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>${name}</title>
-</head>
-<body>
-</body>
-</html>`;
-    var buffer = Buffer.from(text, 'utf8');
+    var buffer = Buffer.from(htmlFactory.createHTML(name), 'utf8');
     fs.writeFileSync(path.resolve(process.cwd(), (name + '.html')), buffer);
     var msj = '-> html file created!';
     console.log(msj);
@@ -98,14 +88,8 @@ coco.createCSS = function (name) {
 coco.createJS = function (name) {
 
     loadConfiguration().then(function (configuration) {
-        var text = `
-/**
-* @name ${ name }
-* @file Add a small description for this file.
-* @author ${ configuration.author } ${ configuration.email }
-* @version 1.0.0
-*/`;
-        var buffer = Buffer.from(text, 'utf8')
+
+        var buffer = Buffer.from(jsFactory.createJS(name, configuration), 'utf8')
         fs.writeFileSync(path.resolve(process.cwd(), (name + '.js')), buffer);
 
         var msj = '-> javascript file created!';
@@ -121,24 +105,8 @@ coco.createJS = function (name) {
 coco.createClass = function (name) {
 
     loadConfiguration().then(function (configuration) {
-        var className = helpers.capitalizeFirstLetter(name);
-        var data = `
-/**
-* @name ${className} 
-* @extends
-* @file ${ name }.js
-* @author ${configuration.author} ${configuration.email} 
-* @version 1.0.0
-*/
-class ${className} {
-    /**
-    * @param {data type} name - description.
-    */
-    constructor() {
-        
-    }
-}`;
-        var buffer = Buffer.from(data, 'utf8');
+
+        var buffer = Buffer.from(jsFactory.createClass(name, configuration), 'utf8');
         fs.writeFileSync(path.resolve(process.cwd(), (name + '.js')), buffer);
 
         var msj = '-> es6 class created!';
@@ -169,10 +137,10 @@ coco.createProject = function (name) {
                                 var buffer = Buffer.from(createCSSForProject(configuration), 'utf8');
                                 fs.writeFileSync((dir + '/css/style.css'), buffer);
 
-                                buffer = Buffer.from(createJSForProject(configuration), 'utf8');
+                                buffer = Buffer.from(jsFactory.createJSForProject(configuration), 'utf8');
                                 fs.writeFileSync((dir + '/js/app.js'), buffer);
 
-                                buffer = Buffer.from(createHTMLForProject(name), 'utf8');
+                                buffer = Buffer.from(htmlFactory.createHTMLForProject(name), 'utf8');
                                 fs.writeFileSync((dir + '/index.html'), buffer);
 
                                 var msj = '-> project created!';
@@ -222,10 +190,10 @@ coco.createWebpackProject = function (name) {
                                         buffer = Buffer.from(createCSSForProject(configuration), 'utf8');
                                         fs.writeFileSync((dir + '/css/style.css'), buffer);
 
-                                        buffer = Buffer.from(createAppJSForWPProject(configuration), 'utf8');
+                                        buffer = Buffer.from(jsFactory.createAppJSForWPProject(configuration), 'utf8');
                                         fs.writeFileSync((dir + '/js/app.js'), buffer);
 
-                                        buffer = Buffer.from(createHTMLForWebpackProject(name), 'utf8');
+                                        buffer = Buffer.from(htmlFactory.createHTMLForWebpackProject(name), 'utf8');
                                         fs.writeFileSync((dir + '/index.html'), buffer);
 
                                         var msj = '-> webpack project created!';
@@ -253,10 +221,10 @@ coco.createGame = function (name) {
 
                 addExtraFiles(dir);
 
-                var buffer = Buffer.from(createJSForGame(configuration), 'utf8');
+                var buffer = Buffer.from(jsFactory.createJSForGame(configuration), 'utf8');
                 fs.writeFileSync((dir + '/js/app.js'), buffer);
 
-                buffer = Buffer.from(createHTMLForGame(name), 'utf8');
+                buffer = Buffer.from(htmlFactory.createHTMLForGame(name), 'utf8');
                 fs.writeFileSync((dir + '/index.html'), buffer);
 
                 //buffer = new Buffer(createSimpleCSS(), 'utf8');
@@ -291,7 +259,6 @@ function addExtraFiles(dir) {
                                 if (err) {
                                     console.log('Error reading stats file in: ' + __dirname);
                                 } else {
-
                                     fs.writeFileSync((dir + '/js/utils/stats.js'), stats);
                                 }
                             });
@@ -315,146 +282,6 @@ function addExtraFiles(dir) {
             });
         }
     });
-}
-
-function createHTMLForGame(name) {
-    var text = '<!DOCTYPE html>\n';
-    text += '<html lang="en">\n\n';
-    text += '<head>\n';
-    text += '	<meta charset="UTF-8">\n';
-    text += '	<meta name="viewport" content="width=device-width, initial-scale=1.0">\n';
-    text += '	<meta http-equiv="X-UA-Compatible" content="ie=edge">\n';
-    text += '	<title>Document</title>\n';
-    text += '	<script src="js/app.js"></script>\n';
-    text += '	<script src="js/utils/colors.js"></script>\n';
-    text += '	<script src="js/utils/stats.js"></script>\n';
-    text += '	<link rel="stylesheet" href="css/style.css">\n';
-    text += '</head>\n\n';
-    text += '<body>\n';
-    text += '<h1 id="title"> Game: ' + name + '</h1>';
-    text += '</body>\n\n';
-    text += '</html>\n';
-    return text;
-}
-
-function createJSForGame(configuration) {
-    var text = '"use strict"';
-    text += '/**\n';
-    text += '* @name app.js\n';
-    text += '* @file Add a small description for this file.\n';
-    text += '* @author ' + configuration.author + ' <' + configuration.email + '>\n';
-    text += '* @version 1.0.0\n';
-    text += '*/\n\n';
-    text += 'window.addEventListener(' + "'load'" + ', init, false);\n\n';
-    text += 'function init() {\n';
-    text += '	console.log(' + "'Game running!'" + ');\n';
-    text += '\n';
-    text += '	//Add Stats\n';
-    text += '	var stats = new Stats();\n';
-    text += '	stats.showPanel(0);\n';
-    text += '  	document.body.appendChild(stats.dom);\n';
-    text += '\n';
-    text += '	var requestId;\n';
-    text += '\n';
-    text += '	function update() {\n';
-    text += '		stats.begin();\n';
-    text += '\n';
-    text += '		//Add here your game code that needs to be update every frame.\n';
-    text += '		stats.end();\n';
-    text += '\n';
-    text += '		requestId = requestAnimationFrame(update);\n';
-    text += '	}\n';
-    text += '\n';
-    text += '	update();\n';
-    text += '\n';
-    text += '	//Add here your game code that does not needs to be update every frame.\n';
-    text += '}'
-    return text;
-}
-
-function createHTMLForProject(name) {
-    var text = '<!DOCTYPE html>\n';
-    text += '<html lang="en">\n\n';
-    text += '<head>\n';
-    text += '	<meta charset="UTF-8">\n';
-    text += '	<meta name="viewport" content="width=device-width, initial-scale=1.0">\n';
-    text += '	<meta http-equiv="X-UA-Compatible" content="ie=edge">\n';
-    text += '	<title>' + name + '</title>\n';
-    text += '	<script src="js/app.js"></script>\n';
-    text += '	<link rel="stylesheet" href="css/style.css">\n';
-    text += '</head>\n\n';
-    text += '<body>\n';
-    text += '	<h1 id="title">Project: ' + name + '</h1>\n';
-    text += '	<h2 id="subtitle">Description: ' + name + '</h2>\n';
-    text += '</body>\n\n';
-    text += '</html>\n';
-    return text;
-}
-
-function createHTMLForWebpackProject(name) {
-    var text = '<!DOCTYPE html>\n';
-    text += '<html lang="en">\n\n';
-    text += '<head>\n';
-    text += '	<meta charset="UTF-8">\n';
-    text += '	<meta name="viewport" content="width=device-width, initial-scale=1.0">\n';
-    text += '	<meta http-equiv="X-UA-Compatible" content="ie=edge">\n';
-    text += '	<title>' + name + '</title>\n';
-    text += '	<script src="dist/bundle.js"></script>\n';
-    text += '</head>\n\n';
-    text += '<body>\n';
-    text += '	<h1 id="title">Project: ' + name + '</h1>\n';
-    text += '	<h2 id="subtitle">Description: ' + name + '</h2>\n';
-    text += '</body>\n\n';
-    text += '</html>\n';
-    return text;
-}
-
-function createJSForProject(configuration) {
-    var text =`
-/**
-* @name app.js
-* @file Add a small description for this file.
-* @author ' + configuration.author + ' <' + configuration.email + '>
-* @version 1.0.0
-*/
-
-"use strict";
-
-window.addEventListener('load', init, false);
-
-function init() {
-    console.log('App running!');
-    //1. Declare variables
-    //2. Initialize variables
-    //3. Events
-    //4. Program Logic
-}`;
-    return text;
-}
-
-function createAppJSForWPProject(configuration) {
-    var text =`
-/**
-* @name app.js
-* @file Add a small description for this file.
-* @author ' + configuration.author + ' <' + configuration.email + '>
-* @version 1.0.0
-*/
-
-"use strict";
-import '../css/style.css';
-import '../index.html'
-
-window.addEventListener('load', init, false);
-
-function init() {
-    console.log('App running!');
-    //1. Declare variables
-    //2. Initialize variables
-    //3. Events
-    //4. Program Logic
-}`;
-    return text;
 }
 
 function createPackageForProject(configuration, name) {
@@ -484,7 +311,6 @@ function createPackageForProject(configuration, name) {
     return text;
 }
 
-
 function createWebPackConfigFile(configuration, name) {
     var text = `
 var path = require('path');
@@ -510,6 +336,73 @@ module.exports = {
                 ]
             }
         ]
+    },
+    devServer: {
+        open: true
+    }
+}
+`;
+    return text;
+}
+
+
+function createPackageForTSProject(configuration, name) {
+    var text = `
+{
+    "name": "${name}",
+    "version": "1.0.0",
+    "description": "",
+    "main": "app.js",
+    "scripts": {
+        "test": "echo \\"Error: no test specified\\" && exit 1",
+        "start": "webpack-dev-server",
+        "build": "webpack -p"
+    },
+    "author": "Add your name here",
+    "license": "MIT",
+    "dependencies": {},
+    "devDependencies": {
+        "css-loader": "*",
+        "style-loader": "*",
+        "html-loader": "*",
+        "webpack": "*",
+        "webpack-cli": "*",
+        "webpack-dev-server": "*",
+        "ts-loader": "*",
+        "typescript": "*"
+    }
+}`;
+    return text;
+}
+
+function createWebPackConfigTSFile(configuration, name) {
+    var text = `
+var path = require('path');
+
+module.exports = {
+    entry:"./js/app.js",
+    output:{
+        path:path.resolve(__dirname, 'dist'),
+        filename:"bundle.js",
+        publicPath:"dist"
+    },    
+    module: {
+        rules:[
+            {
+                test: /\\.html$/i,
+                loader: 'html-loader',
+            },
+            {
+                test: /\\.css$/,
+                use: [
+                    'style-loader', 
+                    'css-loader'
+                ]
+            }
+        ]
+    },
+    devServer: {
+        open: true
     }
 }
 `;
