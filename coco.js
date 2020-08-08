@@ -20,7 +20,7 @@ const rl = readline.createInterface({
 });
 
 var coco = {};
-var version = 'v 1.7.1';
+var version = 'v 1.7.2';
 
 coco.saveEmail = function (email) {
     loadConfiguration().then(function (configuration) {
@@ -171,14 +171,14 @@ function addStatsFile(dir) {
 
 function addReferenceToIndex(name) {
     var dir = path.resolve(process.cwd());
-    fs.readFile(__dirname + '/index.html', 'utf8', function (err, file) {
+    fs.readFile(dir + '/test/index.html', 'utf8', function (err, file) {
         if (err) {
             console.log('Error reading index.html file in: ' + __dirname);
         } else {
             var n = file.search("</head>");
             var b = `    <script src="${name}"></script>\n`;
             var output = [file.slice(0, n), b, file.slice(n)].join('');
-            fs.writeFileSync((dir + '/index.html'), output);
+            fs.writeFileSync((dir + '/test/index.html'), output);
         }
     });
 }
