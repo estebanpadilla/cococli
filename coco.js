@@ -6,7 +6,7 @@
  * @todo Add fileManager. configutationManager y errorManager.
  */
 
-var helpers = require('./lib/helpers');
+var helpers = require('./libs/helpers');
 var fs = require('fs');
 var path = require('path');
 
@@ -20,7 +20,7 @@ const rl = readline.createInterface({
 });
 
 var coco = {};
-var version = 'v 1.6.9';
+var version = 'v 1.7.0';
 
 coco.saveEmail = function (email) {
     loadConfiguration().then(function (configuration) {
@@ -114,6 +114,56 @@ coco.createClass = function (name) {
 
     }).catch(function (reject) {
         //Do nothing here for now.
+    });
+}
+
+coco.addHtmlJS = function () {
+    var dir = path.resolve(process.cwd());
+    fs.mkdir(dir + '/js/libs', function (err) {
+        if (err) {
+            if (err.code === 'EEXIST') {
+                addHtmlJSFile(dir);
+            } else {
+                console.log('Error creating folder libs:', err);
+            }
+        } else {
+            addHtmlJSFile(dir);
+        }
+    });
+}
+
+function addHtmlJSFile(dir) {
+    fs.readFile(__dirname + '/libs/html.js', 'utf8', function (err, file) {
+        if (err) {
+            console.log('Error reading html.js file in: ' + __dirname);
+        } else {
+            fs.writeFileSync((dir + '/js/libs/html.js'), file);
+        }
+    });
+}
+
+coco.addStats = function () {
+    var dir = path.resolve(process.cwd());
+    fs.mkdir(dir + '/js/libs', function (err) {
+        if (err) {
+            if (err.code === 'EEXIST') {
+                addStatsFile(dir);
+            } else {
+                console.log('Error creating folder libs:', err);
+            }
+        } else {
+            addStatsFile(dir);
+        }
+    });
+}
+
+function addStatsFile(dir) {
+    fs.readFile(__dirname + '/libs/stats.js', 'utf8', function (err, file) {
+        if (err) {
+            console.log('Error reading stats.js file in: ' + __dirname);
+        } else {
+            fs.writeFileSync((dir + '/js/libs/stats.js'), file);
+        }
     });
 }
 
@@ -244,22 +294,22 @@ function addExtraFiles(dir) {
         if (err) {
             console.log('Error creating folder /js');
         } else {
-            fs.mkdir(dir + '/js/utils', function (err) {
+            fs.mkdir(dir + '/js/libs', function (err) {
                 if (err) {
-                    console.log('Error creating folder /utils.');
+                    console.log('Error creating folder libs.');
                 } else {
-                    fs.readFile(__dirname + '/projectFiles/cocoColors.js', 'utf8', function (err, colors) {
+                    fs.readFile(__dirname + '/libs/cocoColors.js', 'utf8', function (err, colors) {
                         if (err) {
                             console.log('Error reading cocoColors file in: ' + __dirname);
                         } else {
 
-                            fs.writeFileSync((dir + '/js/utils/colors.js'), colors);
+                            fs.writeFileSync((dir + '/js/libs/colors.js'), colors);
 
-                            fs.readFile(__dirname + '/projectFiles/stats.js', 'utf8', function (err, stats) {
+                            fs.readFile(__dirname + '/libs/stats.js', 'utf8', function (err, stats) {
                                 if (err) {
                                     console.log('Error reading stats file in: ' + __dirname);
                                 } else {
-                                    fs.writeFileSync((dir + '/js/utils/stats.js'), stats);
+                                    fs.writeFileSync((dir + '/js/libs/stats.js'), stats);
                                 }
                             });
                         }
@@ -273,7 +323,7 @@ function addExtraFiles(dir) {
         if (err) {
             console.log('-> Error creating folder css');
         } else {
-            fs.readFile(__dirname + '/projectFiles/style.css', 'utf8', function (err, style) {
+            fs.readFile(__dirname + '/libs/style.css', 'utf8', function (err, style) {
                 if (err) {
                     console.log('-> Error reading style file');
                 } else {
@@ -344,7 +394,6 @@ module.exports = {
 `;
     return text;
 }
-
 
 function createPackageForTSProject(configuration, name) {
     var text = `
@@ -429,7 +478,7 @@ function createCSSForProject(configuration) {
 }
 
 * { padding: 0; margin: 0; font-family: Arial, Helvetica, sans-serif; }
-h1 { color:var(--main-color) }
+h1 { color:var(--primary-color) }
 h2 { color:var(--secondary-color) }`;
     return text;
 }
@@ -455,6 +504,7 @@ coco.showHelp = function () {
    -webpack | -wp  |   name           |  Creates a basic webpack project               
    -game    |  -g  |   name           |  Creates a basic game project                  
    -class   |  	   |   name           |  Creates a ES6 class                           
+   -htmljs  |      |                  |  Add html utilities file		               
    -email   |  	   |   yourEmail      |  Adds your email to config file                
    -author  |      |   name lastName  |  Adds your name and last name to config file.   
    -config  |      |     			  |  Small wizard to setup your information you.   

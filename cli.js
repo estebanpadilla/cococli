@@ -19,6 +19,16 @@ function start() {
 	const name = args[1];
 
 	switch (command) {
+		case '-htmljs':
+			coco.addHtmlJS();
+			isOK = true;
+			coco.closeReadLine();
+			break;
+		case '-stats':
+			coco.addStats();
+			isOK = true;
+			coco.closeReadLine();
+			break;
 		case '-js':
 			coco.createJS(name);
 			isOK = true;
