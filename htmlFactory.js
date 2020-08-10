@@ -22,7 +22,7 @@ htmlFactory.createHTMLForGame = function (name) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title> ${ name}</title>
-    <script src="js/app.js"></script>
+    <script src="js/main.js"></script>
     <script src="js/libs/colors.js"></script>
     <script src="js/libs/stats.js"></script>
     <link rel="stylesheet" href="css/style.css">
@@ -41,7 +41,7 @@ htmlFactory.createHTMLForProject = function (name) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>${ name}</title>
-    <script src="js/app.js"></script>
+    <script src="js/main.js"></script>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>

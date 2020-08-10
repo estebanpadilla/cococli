@@ -32,7 +32,7 @@ class ${className} {
 
 jsFactory.createJSForGame = function (configuration) {
     return `/**
-* @name app.js
+* @name main.js
 * @file Add a small description for this file.
 * @author ${ configuration.author }, ${ configuration.email }
 * @version 1.0.0
@@ -69,7 +69,7 @@ function init() {
 
 jsFactory.createJSForProject = function (configuration) {
     return `/**
-* @name app.js
+* @name main.js
 * @file Add a small description for this file.
 * @author ${ configuration.author }, ${ configuration.email }
 * @version 1.0.0
@@ -90,7 +90,7 @@ function init() {
 
 jsFactory.createAppJSForWPProject = function (configuration) {
  return `/**
-* @name app.js
+* @name main.js
 * @file Add a small description for this file.
 * @author ${ configuration.author }, ${ configuration.email }
 * @version 1.0.0

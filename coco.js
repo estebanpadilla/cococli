@@ -2,7 +2,7 @@
  * @name coco.js
  * @file Charge of creating and saving files.
  * @author Esteban Padilla <ep@estebanpadilla.com>
- * @version 1.6.0
+ * @version 1.7.4
  * @todo Add fileManager. configutationManager y errorManager.
  */
 
@@ -20,7 +20,7 @@ const rl = readline.createInterface({
 });
 
 var coco = {};
-var version = 'v 1.7.3';
+var version = 'v 1.7.4';
 
 coco.saveEmail = function (email) {
     loadConfiguration().then(function (configuration) {
@@ -205,7 +205,7 @@ coco.createProject = function (name) {
                                 fs.writeFileSync((dir + '/css/style.css'), buffer);
 
                                 buffer = Buffer.from(jsFactory.createJSForProject(configuration), 'utf8');
-                                fs.writeFileSync((dir + '/js/app.js'), buffer);
+                                fs.writeFileSync((dir + '/js/main.js'), buffer);
 
                                 buffer = Buffer.from(htmlFactory.createHTMLForProject(name), 'utf8');
                                 fs.writeFileSync((dir + '/index.html'), buffer);
@@ -258,7 +258,7 @@ coco.createWebpackProject = function (name) {
                                         fs.writeFileSync((dir + '/css/style.css'), buffer);
 
                                         buffer = Buffer.from(jsFactory.createAppJSForWPProject(configuration), 'utf8');
-                                        fs.writeFileSync((dir + '/js/app.js'), buffer);
+                                        fs.writeFileSync((dir + '/js/main.js'), buffer);
 
                                         buffer = Buffer.from(htmlFactory.createHTMLForWebpackProject(name), 'utf8');
                                         fs.writeFileSync((dir + '/index.html'), buffer);
@@ -289,7 +289,7 @@ coco.createGame = function (name) {
                 addExtraFiles(dir);
 
                 var buffer = Buffer.from(jsFactory.createJSForGame(configuration), 'utf8');
-                fs.writeFileSync((dir + '/js/app.js'), buffer);
+                fs.writeFileSync((dir + '/js/main.js'), buffer);
 
                 buffer = Buffer.from(htmlFactory.createHTMLForGame(name), 'utf8');
                 fs.writeFileSync((dir + '/index.html'), buffer);
@@ -357,7 +357,7 @@ function createPackageForProject(configuration, name) {
     "name": "${name}",
     "version": "1.0.0",
     "description": "",
-    "main": "app.js",
+    "main": "main.js",
     "scripts": {
         "test": "echo \\"Error: no test specified\\" && exit 1",
         "start": "webpack-dev-server",
@@ -383,7 +383,7 @@ function createWebPackConfigFile(configuration, name) {
 var path = require('path');
 
 module.exports = {
-    entry:"./js/app.js",
+    entry:"./js/main.js",
     output:{
         path:path.resolve(__dirname, 'dist'),
         filename:"bundle.js",
@@ -418,7 +418,7 @@ function createPackageForTSProject(configuration, name) {
     "name": "${name}",
     "version": "1.0.0",
     "description": "",
-    "main": "app.js",
+    "main": "main.js",
     "scripts": {
         "test": "echo \\"Error: no test specified\\" && exit 1",
         "start": "webpack-dev-server",
@@ -446,7 +446,7 @@ function createWebPackConfigTSFile(configuration, name) {
 var path = require('path');
 
 module.exports = {
-    entry:"./js/app.js",
+    entry:"./js/main.js",
     output:{
         path:path.resolve(__dirname, 'dist'),
         filename:"bundle.js",
@@ -495,8 +495,18 @@ function createCSSForProject(configuration) {
 }
 
 * { padding: 0; margin: 0; font-family: Arial, Helvetica, sans-serif; }
-h1 { color:var(--primary-color) }
-h2 { color:var(--secondary-color) }`;
+.h1 { color:var(--primary-color) }
+.h2 { color:var(--secondary-color) }
+.button {
+    min-width: 60px;
+    border-style: none;
+    padding: 10px 10px 10px 10px;
+    margin: 5px 5px 5px 5px;
+    font-weight: bold;
+    color: white;
+    background-color: var(--secondary-color);
+    outline:none;
+}`;
     return text;
 }
 
@@ -536,8 +546,7 @@ When running -config you may need to use sudo due to permissions on your OS.
 Update to the latest version using this command: npm update -g cococli
 For Webpack project you will need to run: npm install on the root folder after creation
 To run the Webpack project on the browser use: npm start
-For support or comments send an email to ep@estebanpadilla.com
-Thank you for using this tool!
+
 version:${version}`;
     console.log(msj);
 }
