@@ -2,7 +2,7 @@
  * @name coco.js
  * @file Charge of creating and saving files.
  * @author Esteban Padilla <ep@estebanpadilla.com>
- * @version 1.7.4
+ * @version 1.7.6
  * @todo Add fileManager. configutationManager y errorManager.
  */
 
@@ -20,7 +20,7 @@ const rl = readline.createInterface({
 });
 
 var coco = {};
-var version = 'v 1.7.5';
+var version = 'v 1.7.6';
 
 coco.saveEmail = function (email) {
     loadConfiguration().then(function (configuration) {
