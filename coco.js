@@ -2,7 +2,7 @@
  * @name coco.js
  * @file Charge of creating and saving files.
  * @author Esteban Padilla <ep@estebanpadilla.com>
- * @version 1.7.4
+ * @version 1.7.6
  * @todo Add fileManager. configutationManager y errorManager.
  */
 
@@ -495,9 +495,10 @@ function createCSSForProject(configuration) {
 }
 
 * { padding: 0; margin: 0; font-family: Arial, Helvetica, sans-serif; }
-.h1 { color:var(--primary-color) }
-.h2 { color:var(--secondary-color) }
-.button {
+h1 { color:var(--primary-color) }
+h2 { color:var(--secondary-color) }
+
+button {
     min-width: 60px;
     border-style: none;
     padding: 10px 10px 10px 10px;
@@ -506,19 +507,17 @@ function createCSSForProject(configuration) {
     color: white;
     background-color: var(--secondary-color);
     outline:none;
-}`;
+}
+
+button:focus {
+    outline: none;
+}
+`;
     return text;
 }
 
 coco.showHelp = function () {
-    var msj = `
----------------------------------------------------------------------------------------     
-             ██████╗ ██████╗  ██████╗ ██████╗      ██████╗██╗     ██╗
-            ██╔════╝██╔═══██╗██╔════╝██╔═══██╗    ██╔════╝██║     ██║
-            ██║     ██║   ██║██║     ██║   ██║    ██║     ██║     ██║
-            ██║     ██║   ██║██║     ██║   ██║    ██║     ██║     ██║
-            ╚██████╗╚██████╔╝╚██████╗╚██████╔╝    ╚██████╗███████╗██║
-             ╚═════╝ ╚═════╝  ╚═════╝ ╚═════╝      ╚═════╝╚══════╝╚═╝                               
+    var msj = `                            
 ---------------------------------------------------------------------------------------
                           Using this CLI is very simple!                               
 ---------------------------------------------------------------------------------------
@@ -547,7 +546,9 @@ Update to the latest version using this command: npm update -g cococli
 For Webpack project you will need to run: npm install on the root folder after creation
 To run the Webpack project on the browser use: npm start
 
-version:${version}`;
+version:${version}
+
+`;
     console.log(msj);
 }
 
