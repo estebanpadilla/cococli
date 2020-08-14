@@ -15,12 +15,5 @@
   },
   "author": "Esteban Padilla",
   "license": "MIT",
-  "dependencies": {},
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com/estebanpadilla",
-    "repository": {
-      "type": "git",
-      "url": "https://github.com/estebanpadilla/cococli.git"
-    }
-  }
+  "dependencies": {}
 }
