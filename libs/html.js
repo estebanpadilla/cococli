@@ -7,7 +7,7 @@ const h1 = (attributes, parent, children) => {
 }
 
 const h2 = (attributes, parent, children) => {
-    return tag('h2', attributes, parent, children );
+    return tag('h2', attributes, parent, children);
 }
 
 const button = (attributes, parent, children) => {
@@ -16,10 +16,16 @@ const button = (attributes, parent, children) => {
 
 const tag = (type, attributes, parent, children) => {
     let e = document.createElement(type);
-    if(parent) parent.appendChild(e);
+    if (parent) parent.appendChild(e);
     if (children) children.map(child => { e.appendChild(child) });
     for (const k in attributes) {
-        e[k] = attributes[k];
+        if (k === 'style') {
+            for (const style in attributes[k]) {
+                e[k][style] = attributes[k][style];
+            }
+        } else {
+            e[k] = attributes[k];
+        }
     }
     return e;
 }
