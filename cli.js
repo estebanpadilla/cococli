@@ -4,7 +4,7 @@
 * @name cli.js
 * @file Add a small description for this file.
 * @author Esteban Padilla <ep@estebanpadilla.com>
-* @version 1.6.0
+* @version 1.0.0
 * How to run on developement: node cli.js Commands Parameters
 */
 
@@ -90,6 +90,11 @@ function start() {
 			break;
 		case '-config':
 			isOK = coco.setupConfiguration();
+			break;
+		case '-addConfig':
+			coco.createConfigurationFile();
+			isOK = true;
+			coco.closeReadLine();
 			break;
 		default:
 			break;
