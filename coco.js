@@ -20,7 +20,7 @@ const rl = readline.createInterface({
 });
 
 var coco = {};
-var version = 'v 1.8.0';
+var version = 'v 1.8.1';
 
 coco.saveEmail = function (email) {
     loadConfiguration().then(function (configuration) {
@@ -28,7 +28,7 @@ coco.saveEmail = function (email) {
         saveConfiguration(configuration);
     }).catch(function (reject) {
         //Do nothing here for now.
-        var msj = '-> Error saving email, you may need to use sudo.\n' = reject;
+        var msj = '-> Error saving email, you may need to use sudo.\n' + reject;
         console.log(msj);
     });
 }
@@ -617,7 +617,6 @@ coco.setupConfiguration = function () {
         }
 
         if (isOK) {
-
             loadConfiguration().then(function (configuration) {
                 configuration.author = name;
                 configuration.email = email;
