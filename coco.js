@@ -20,7 +20,7 @@ const rl = readline.createInterface({
 });
 
 var coco = {};
-var version = 'v 1.7.8';
+var version = 'v 1.7.9';
 
 coco.saveEmail = function (email) {
     loadConfiguration().then(function (configuration) {
@@ -66,7 +66,7 @@ function saveConfiguration(configuration) {
         var msj = '-> Configuration saved, you can use the same command to change it anytime!';
         console.log(msj);
     } catch (error) {
-        var msj = '-> There was an error saving configuration, sorry.';
+        var msj = '-> There was an error saving configuration, sorry.' + error;
         console.log(msj);
     }
 }
@@ -626,7 +626,7 @@ coco.setupConfiguration = function () {
             }).catch(function (reject) {
                 //Do nothing here for now.
                 rl.close();
-                var msj = '-> Error saving your setup, please try again!';
+                var msj = '-> Error saving your setup, please try again!' + reject;
                 console.log(msj);
             });
         }
