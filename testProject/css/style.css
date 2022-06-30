@@ -1,0 +1,31 @@
+
+/**
+* @name style.css
+* @file Add a small description for this file.
+* @author <Add Your Name Here> <addyouremail@mail.com>
+* @version 1.0.0
+*/
+    
+:root {
+    --primary-color: #263238;
+    --secondary-color: #f50057;
+}
+
+* { padding: 0; margin: 0; font-family: Arial, Helvetica, sans-serif; }
+h1 { color:var(--primary-color) }
+h2 { color:var(--secondary-color) }
+
+button {
+    min-width: 60px;
+    border-style: none;
+    padding: 10px 10px 10px 10px;
+    margin: 5px 5px 5px 5px;
+    font-weight: bold;
+    color: white;
+    background-color: var(--secondary-color);
+    outline:none;
+}
+
+button:focus {
+    outline: none;
+}

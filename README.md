@@ -26,17 +26,16 @@ Here a simple table that show how to use it.
 ---------------------------------------------------------------------------------------
    -js      |  	   |   filename       |  Creates a javascript file                      
    -html    |  	   |   filename       |  Creates a html file                           
-   -css     |	   |   filename       |  Creates a css file                            
-   -proj    |  -p  |   name           |  Creates a basic web project                   
-   -webpack | -wp  |   name           |  Creates a basic webpack project               
-   -game    |  -g  |   name           |  Creates a basic game project                  
+   -css     |	      |   filename       |  Creates a css file                            
+   -proj    |  -p    |   name           |  Creates a basic web project                   
+   -game    |  -g    |   name           |  Creates a basic game project                  
    -class   |  	   |   name           |  Creates a ES6 class                           
-   -htmljs  |      |                  |  Add html utilities file		               
+   -htmljs  |        |                  |  Add html helper file		               
    -email   |  	   |   yourEmail      |  Adds your email to config file                
-   -author  |      |   name lastName  |  Adds your name and last name to config file.   
-   -config  |      |     			  |  Small wizard to setup your information you.   
-   -help    |  -h  |                  |  Shows this information                        
-   -version |  -v  |                  |  Shows the version		                       
+   -author  |        |   name lastName  |  Adds your name and last name to config file.   
+   -config  |        |     			    |  Small wizard to setup your information you.   
+   -help    |  -h    |                  |  Shows this information                        
+   -version |  -v    |                  |  Shows the version		                       
 ---------------------------------------------------------------------------------------
 Example:
 coco -js main

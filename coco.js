@@ -2,7 +2,7 @@
  * @name coco.js
  * @file Charge of creating and saving files.
  * @author Esteban Padilla <ep@estebanpadilla.com>
- * @version 1.7.7
+ * @version 1.7.8
  * @todo Add fileManager. configutationManager y errorManager.
  */
 
@@ -20,7 +20,7 @@ const rl = readline.createInterface({
 });
 
 var coco = {};
-var version = 'v 1.7.6';
+var version = 'v 1.7.8';
 
 coco.saveEmail = function (email) {
     loadConfiguration().then(function (configuration) {
@@ -69,6 +69,20 @@ function saveConfiguration(configuration) {
         var msj = '-> There was an error saving configuration, sorry.';
         console.log(msj);
     }
+}
+
+coco.createHTMLHelper = function (name) {
+    loadConfiguration().then(function (configuration) {
+
+        var buffer = Buffer.from(jsFactory.createHTMLHelper(configuration), 'utf8');
+        fs.writeFileSync(path.resolve(process.cwd(), 'html.js'), buffer);
+
+        var msj = '-> html helper created!';
+        console.log(msj);
+
+    }).catch(function (reject) {
+        //Do nothing here for now.
+    });
 }
 
 coco.createHTML = function (name) {
