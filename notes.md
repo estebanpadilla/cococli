@@ -2,6 +2,7 @@
 1. Run in terminal -> node cli.js Commands Parameters
 
 ## Update package to npm repo
+0. Make sure configuration.json file is remove, otherwise will not allow to add configuration to user.
 1. Change the version number.
 2. Commit all changes to Github.
 3. Make sure your are logged in to npm.

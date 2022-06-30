@@ -2,7 +2,7 @@
  * @name coco.js
  * @file Charge of creating and saving files.
  * @author Esteban Padilla <ep@estebanpadilla.com>
- * @version 1.7.8
+ * @version 1.0.0
  * @todo Add fileManager. configutationManager y errorManager.
  */
 
@@ -20,7 +20,7 @@ const rl = readline.createInterface({
 });
 
 var coco = {};
-var version = 'v 1.7.9';
+var version = 'v 1.8.0';
 
 coco.saveEmail = function (email) {
     loadConfiguration().then(function (configuration) {
@@ -28,7 +28,7 @@ coco.saveEmail = function (email) {
         saveConfiguration(configuration);
     }).catch(function (reject) {
         //Do nothing here for now.
-        var msj = '-> Error saving email, you may need to use sudo';
+        var msj = '-> Error saving email, you may need to use sudo.\n' = reject;
         console.log(msj);
     });
 }
@@ -39,7 +39,7 @@ coco.saveAuthor = function (author) {
         saveConfiguration(configuration)
     }).catch(function (reject) {
         //Do nothing here for now.
-        var msj = '-> Error saving author, you may need to use sudo';
+        var msj = '-> Error saving author, you may need to use sudo.\n' + reject;
         console.log(msj);
     });
 }
@@ -66,7 +66,7 @@ function saveConfiguration(configuration) {
         var msj = '-> Configuration saved, you can use the same command to change it anytime!';
         console.log(msj);
     } catch (error) {
-        var msj = '-> There was an error saving configuration, sorry.' + error;
+        var msj = '-> There was an error saving configuration, sorry.\n' + error;
         console.log(msj);
     }
 }
@@ -111,7 +111,7 @@ coco.createJS = function (name) {
 
     }).catch(function (reject) {
         //Do nothing here for now.
-        var msj = '-> Error loading configuration file.';
+        var msj = '-> Error loading configuration file.\n' + reject;
         console.log(msj);
     });
 }
@@ -626,7 +626,7 @@ coco.setupConfiguration = function () {
             }).catch(function (reject) {
                 //Do nothing here for now.
                 rl.close();
-                var msj = '-> Error saving your setup, please try again!' + reject;
+                var msj = '-> Error saving your setup, please try again!\n' + reject;
                 console.log(msj);
             });
         }
